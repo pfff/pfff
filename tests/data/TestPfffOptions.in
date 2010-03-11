@@ -1,0 +1,59 @@
+pfff
+pfff -k
+pfff -k1 x
+pfff --key=1 x
+pfff --key 1 x
+pfff -k2 x
+pfff -k2000000000 x
+pfff -k0 x
+pfff -k2147483647 x
+pfff -k2147483648 x
+pfff -k4000000000 x
+pfff -k -1 x
+pfff -k abc x
+pfff -k 1ab x
+pfff -k1 -H1 x
+pfff -k1 --with-header 1 x
+pfff -k1 -H1048575 x
+pfff -k1 -H1048576 x
+pfff -k1 -Ha x
+pfff -k1 -H1a x
+pfff -k1 -H0 x
+pfff -k1 -H-1 x
+pfff -k1 -S x
+pfff -k1 --with-size --with-header=1 x
+pfff -k1 -S -H 1 x
+pfff -k1 -SH 1 x
+pfff x -k1 -f
+pfff -k1 -f poly1305aes x
+pfff -k1 -f md5 x
+pfff -k1 -f csv x
+pfff -k1 -f debug x
+pfff -k1 --format md5 x
+pfff -k1 --format md5 --no-prefix x
+pfff -k1 --format md5 -b x
+pfff -k1  -f md5 -B x
+pfff -k1  -f md5 -bB x
+pfff -bBSk1 x
+pfff -k1 -n 0 x
+pfff -k1 -n65535 x
+pfff -k1 -n65536 x
+pfff -k1 -n-1 x
+pfff -k1 --block-count 1010 x
+pfff -k1 --block-count abc x
+pfff -k1 -s 1 x
+pfff -k1 --block-size 1023 x
+pfff -k1 --block-size 1024 x
+pfff -k1 --block-size 0 x
+pfff -k1 --block-size -1 x
+pfff -k1 --block-count 1023 --block-size 1023 -w x
+pfff -k1 --request-cost 0 x
+pfff -k1 -c 1 x
+pfff -k1 -E x
+pfff -k1 -h x
+pfff --help
+pfff -h
+pfff -k1 -S -f csv -bB -n1024 -wc100 -E x
+pfff -k1 -S -f csv -bBh -n1024 -wc100 -E x
+pfff -k1 -S -f csv -bBh -n0 -wc100 -E x
+pfff -k1 -S -f csv -bB -n0 -wc100 -E x

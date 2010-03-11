@@ -1,0 +1,67 @@
+# Project: Pfff
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe -D__DEBUG__
+CC   = gcc.exe -D__DEBUG__
+WINDRES = windres.exe
+RES  = 
+OBJ  = build/pfff.o build/output_utils.o build/PfffBlockReader.o build/PfffBlockSampleGenerator.o build/PfffOptionManager.o build/PfffHasher.o build/PfffOutputFormatter.o build/PfffPostHashing.o build/Socket.o build/FtpSocket.o build/PfffFtpBlockReader.o build/PfffCLib.o build/PfffOptions.o $(RES)
+LINKOBJ  = build/pfff.o build/output_utils.o build/PfffBlockReader.o build/PfffBlockSampleGenerator.o build/PfffOptionManager.o build/PfffHasher.o build/PfffOutputFormatter.o build/PfffPostHashing.o build/Socket.o build/FtpSocket.o build/PfffFtpBlockReader.o build/PfffCLib.o build/PfffOptions.o $(RES)
+LIBS =  -L"C:/Dev/Dev-Cpp/lib" -lws2_32  -g3 
+INCS =  -I"C:/Dev/Dev-Cpp/include"  -I"include"  -I"libsrc/mtwister"  -I"libsrc/md5"  -I"libsrc/poly1305aes-20050218"  -I"libsrc/poly1305aes-embed"  -I"libsrc/optionmanager"  -I"libsrc/socket" 
+CXXINCS =  -I"C:/Dev/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev/Dev-Cpp/include"  -I"include"  -I"libsrc/mtwister"  -I"libsrc/md5"  -I"libsrc/poly1305aes-20050218"  -I"libsrc/poly1305aes-embed"  -I"libsrc/optionmanager"  -I"libsrc/socket" 
+BIN  = build/pfff.exe
+CXXFLAGS = $(CXXINCS)   -fexpensive-optimizations -g3
+CFLAGS = $(INCS)   -fexpensive-optimizations -g3
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before build/pfff.exe all-after
+
+include Makefile.libs
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "build\pfff.exe" $(LIBS)
+
+build/pfff.o: src/pfff.cpp
+	$(CPP) -c src/pfff.cpp -o build/pfff.o $(CXXFLAGS)
+
+build/output_utils.o: src/output_utils.cpp
+	$(CPP) -c src/output_utils.cpp -o build/output_utils.o $(CXXFLAGS)
+
+build/PfffBlockReader.o: src/PfffBlockReader.cpp
+	$(CPP) -c src/PfffBlockReader.cpp -o build/PfffBlockReader.o $(CXXFLAGS)
+
+build/PfffBlockSampleGenerator.o: src/PfffBlockSampleGenerator.cpp
+	$(CPP) -c src/PfffBlockSampleGenerator.cpp -o build/PfffBlockSampleGenerator.o $(CXXFLAGS)
+
+build/PfffOptionManager.o: src/PfffOptionManager.cpp
+	$(CPP) -c src/PfffOptionManager.cpp -o build/PfffOptionManager.o $(CXXFLAGS)
+
+build/PfffHasher.o: src/PfffHasher.cpp
+	$(CPP) -c src/PfffHasher.cpp -o build/PfffHasher.o $(CXXFLAGS)
+
+build/PfffOutputFormatter.o: src/PfffOutputFormatter.cpp
+	$(CPP) -c src/PfffOutputFormatter.cpp -o build/PfffOutputFormatter.o $(CXXFLAGS)
+
+build/PfffPostHashing.o: src/PfffPostHashing.cpp
+	$(CPP) -c src/PfffPostHashing.cpp -o build/PfffPostHashing.o $(CXXFLAGS)
+
+build/Socket.o: libsrc/socket/Socket.cpp
+	$(CPP) -c libsrc/socket/Socket.cpp -o build/Socket.o $(CXXFLAGS)
+
+build/FtpSocket.o: libsrc/socket/FtpSocket.cpp
+	$(CPP) -c libsrc/socket/FtpSocket.cpp -o build/FtpSocket.o $(CXXFLAGS)
+
+build/PfffFtpBlockReader.o: src/PfffFtpBlockReader.cpp
+	$(CPP) -c src/PfffFtpBlockReader.cpp -o build/PfffFtpBlockReader.o $(CXXFLAGS)
+
+build/PfffCLib.o: src/PfffCLib.cpp
+	$(CPP) -c src/PfffCLib.cpp -o build/PfffCLib.o $(CXXFLAGS)
+
+build/PfffOptions.o: src/PfffOptions.cpp
+	$(CPP) -c src/PfffOptions.cpp -o build/PfffOptions.o $(CXXFLAGS)

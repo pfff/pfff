@@ -1,0 +1,23 @@
+CXX = $(CPP)
+
+all-before: libsrc/UnitTest++/libUnitTest++.a
+libsrc/UnitTest++/libUnitTest++.a:
+	make -C libsrc/UnitTest++ CXX=$(CXX) MODE=$(MODE) libUnitTest++.a
+
+clean: libUnitTest-clean
+
+libUnitTest-clean:
+	make -C libsrc/UnitTest++ CXX=$(CXX) MODE=$(MODE) clean
+
+
+build/test: ../build/libpfff-all.a
+
+ifeq ($(suffix $(CPP)),.exe)
+tests: all
+	cd build && test.exe
+else
+tests: all
+	cd build && ./test
+endif
+
+

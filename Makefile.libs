@@ -1,0 +1,48 @@
+# Build custom libraries
+
+CUSTOMLIBS = libsrc/poly1305aes-embed/libpoly1305aes.a
+CUSTOMLIBS += libsrc/mtwister/libMTwister.a
+CUSTOMLIBS += libsrc/md5/libmd5.a
+CUSTOMLIBS += libsrc/optionmanager/libOptionManager.a
+CUSTOMLIBS += libsrc/socket/libSocket.a
+
+LIBS += $(CUSTOMLIBS)
+
+all-before: $(CUSTOMLIBS)
+clean-custom: $(CUSTOMLIBS:.a=.a-clean)
+	${RM} build/libpfff-all.a
+	${RM} build/*.o
+	${RM} build/*.a-extract
+
+%.a:
+	make -C $(dir $@) $(notdir $@)
+%.a-clean:
+	make -C $(dir $@) clean
+
+
+# Test target
+ifeq ($(suffix $(CPP)), .exe)
+tests: build/libpfff-all.a
+	make -C test -f Makefile.win tests
+
+superclean: clean
+	make -C test -f Makefile.win clean
+else
+tests: build/libpfff-all.a
+	make -C test tests
+
+superclean: clean
+	make -C test clean
+endif
+
+# Library combining all files in the project except the pfff.o
+# Used in tests to avoid specifying all libraries to link against
+build/libpfff-all.a: $(OBJ) $(CUSTOMLIBS) $(foreach lib,$(CUSTOMLIBS),build/$(subst /,-D-,$(lib)-extract))
+	ar crs build/libpfff-all.a $(filter-out build/pfff.o,$(wildcard build/*.o))
+
+build/%.a-extract:
+	echo $(subst -D-,/,$*.a) > build/$*.a-extract
+	cd build && ar x ../$(subst -D-,/,$*.a)
+
+all-after: build/libpfff-all.a
+

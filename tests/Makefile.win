@@ -1,0 +1,67 @@
+# Project: PfffTest
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = build/main.o build/TestMTwister.o build/TestPfffOptions.o build/TestHexOutput.o build/TestPostHashers.o build/TestPfffBlockSampleGenerator.o build/TestPfffOutputFormatter.o build/test_util.o build/TestPfffHasher.o build/TestTimings.o build/TestPfffHasherOnFiles.o build/TestPlatform.o build/TestPfffCLibOnFiles.o $(RES)
+LINKOBJ  = build/main.o build/TestMTwister.o build/TestPfffOptions.o build/TestHexOutput.o build/TestPostHashers.o build/TestPfffBlockSampleGenerator.o build/TestPfffOutputFormatter.o build/test_util.o build/TestPfffHasher.o build/TestTimings.o build/TestPfffHasherOnFiles.o build/TestPlatform.o build/TestPfffCLibOnFiles.o $(RES)
+LIBS =  -L"C:/Dev/Dev-Cpp/lib" -L"libsrc/UnitTest++" -lUnitTest++ ../build/libpfff-all.a  
+INCS =  -I"C:/Dev/Dev-Cpp/include"  -I"libsrc/UnitTest++/src"  -I"../libsrc/mtwister"  -I"../libsrc/md5"  -I"../libsrc/optionmanager"  -I"../libsrc/poly1305aes-20050218"  -I"../libsrc/poly1305aes-embed"  -I"../src"  -I"../include" 
+CXXINCS =  -I"C:/Dev/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev/Dev-Cpp/include"  -I"libsrc/UnitTest++/src"  -I"../libsrc/mtwister"  -I"../libsrc/md5"  -I"../libsrc/optionmanager"  -I"../libsrc/poly1305aes-20050218"  -I"../libsrc/poly1305aes-embed"  -I"../src"  -I"../include" 
+BIN  = build/test.exe
+CXXFLAGS = $(CXXINCS)   -fexpensive-optimizations
+CFLAGS = $(INCS)   -fexpensive-optimizations
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before build/test.exe all-after
+
+include Makefile.libs
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "build\test.exe" $(LIBS)
+
+build/main.o: src/main.cpp
+	$(CPP) -c src/main.cpp -o build/main.o $(CXXFLAGS)
+
+build/TestMTwister.o: src/TestMTwister.cpp
+	$(CPP) -c src/TestMTwister.cpp -o build/TestMTwister.o $(CXXFLAGS)
+
+build/TestPfffOptions.o: src/TestPfffOptions.cpp
+	$(CPP) -c src/TestPfffOptions.cpp -o build/TestPfffOptions.o $(CXXFLAGS)
+
+build/TestHexOutput.o: src/TestHexOutput.cpp
+	$(CPP) -c src/TestHexOutput.cpp -o build/TestHexOutput.o $(CXXFLAGS)
+
+build/TestPostHashers.o: src/TestPostHashers.cpp
+	$(CPP) -c src/TestPostHashers.cpp -o build/TestPostHashers.o $(CXXFLAGS)
+
+build/TestPfffBlockSampleGenerator.o: src/TestPfffBlockSampleGenerator.cpp
+	$(CPP) -c src/TestPfffBlockSampleGenerator.cpp -o build/TestPfffBlockSampleGenerator.o $(CXXFLAGS)
+
+build/TestPfffOutputFormatter.o: src/TestPfffOutputFormatter.cpp
+	$(CPP) -c src/TestPfffOutputFormatter.cpp -o build/TestPfffOutputFormatter.o $(CXXFLAGS)
+
+build/test_util.o: src/test_util.cpp
+	$(CPP) -c src/test_util.cpp -o build/test_util.o $(CXXFLAGS)
+
+build/TestPfffHasher.o: src/TestPfffHasher.cpp
+	$(CPP) -c src/TestPfffHasher.cpp -o build/TestPfffHasher.o $(CXXFLAGS)
+
+build/TestTimings.o: src/TestTimings.cpp
+	$(CPP) -c src/TestTimings.cpp -o build/TestTimings.o $(CXXFLAGS)
+
+build/TestPfffHasherOnFiles.o: src/TestPfffHasherOnFiles.cpp
+	$(CPP) -c src/TestPfffHasherOnFiles.cpp -o build/TestPfffHasherOnFiles.o $(CXXFLAGS)
+
+build/TestPlatform.o: src/TestPlatform.cpp
+	$(CPP) -c src/TestPlatform.cpp -o build/TestPlatform.o $(CXXFLAGS)
+
+build/TestPfffCLibOnFiles.o: src/TestPfffCLibOnFiles.cpp
+	$(CPP) -c src/TestPfffCLibOnFiles.cpp -o build/TestPfffCLibOnFiles.o $(CXXFLAGS)
