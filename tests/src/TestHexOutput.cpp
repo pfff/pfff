@@ -2,7 +2,7 @@
 #include "config.h"
 #include "output_utils.h"
 
-string encode_hex(char* in, int len) {
+string encode_hex(const char* in, int len) {
 	ostringstream os;
 	output_hex(os, in, len);
 	return os.str();

@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
     PfffAppEngine* engine = new PfffAppEngine();
     engine->init(argc, argv);
     bool recursive = engine->option_manager.recursive && !engine->option_manager.ftp_given;
-    bool success = process_files(engine->option_manager.parameters, recursive, engine->option_manager.fail_on_error, engine);
+    bool success = process_files(engine->option_manager.parameters, recursive, engine->option_manager.no_symlinks, engine->option_manager.fail_on_error, engine);
     engine->quit();
     delete engine;
 	return success ? 0: 1;

@@ -175,9 +175,8 @@ TEST(TestBlockReaderWithBuffering) {
 	ba->begin_block_sequence(buffer);
 	CHECK(ba->read_blocks(10, block_indexes, 6));
 	CHECK(ba->end_block_sequence());
-	char * expected = "000001111100000111112222233333222223333344444\x00\x00\x00\x00\x00" "44444\x00\x00\x00\x00\x00";
-	CHECK_ARRAY_EQUAL("000001111100000111112222233333222223333344444\x00\x00\x00\x00\x00" "44444\x00\x00\x00\x00\x00", 
-					buffer, 60);
+	const char * expected = "000001111100000111112222233333222223333344444\x00\x00\x00\x00\x00" "44444\x00\x00\x00\x00\x00";
+	CHECK_ARRAY_EQUAL(expected, buffer, 60);
 	delete ba;
 }
 

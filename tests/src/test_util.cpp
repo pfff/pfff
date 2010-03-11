@@ -6,7 +6,7 @@
 
 // ------------- FileFixture --------------
 
-FileFixture::FileFixture(char* DATA_DIR, char* filename) {
+FileFixture::FileFixture(const char* DATA_DIR, const char* filename) {
 	string data_dir(DATA_DIR);
 	string file_path = data_dir + filename;
 	in.open(file_path.c_str());
@@ -34,7 +34,7 @@ string FileFixture::next_line(ifstream& infile) {
 }
 
 // ------------- TwoFileFixture --------------
-TwoFileFixture::TwoFileFixture(char* DATA_DIR, char* filename1, char* filename2): FileFixture(DATA_DIR, filename1) {
+TwoFileFixture::TwoFileFixture(const char* DATA_DIR, const char* filename1, const char* filename2): FileFixture(DATA_DIR, filename1) {
 	string data_dir(DATA_DIR);
 	string file_path2 = data_dir + filename2;
 	in2.open(file_path2.c_str());

@@ -40,7 +40,7 @@ using namespace std;
 struct FileFixture {
 	ifstream in;
 	
-	FileFixture(char* DATA_DIR, char* filename);
+	FileFixture(const char* DATA_DIR, const char* filename);
 	~FileFixture(); // Note: we don't care about virtual methods here
 	inline bool eof() { return in.eof(); }
 	inline string next_line() { return next_line(in); }
@@ -57,7 +57,7 @@ protected:
 struct TwoFileFixture: public FileFixture {
 	ifstream in2;
 	
-	TwoFileFixture(char* DATA_DIR, char* filename1, char* filename2);
+	TwoFileFixture(const char* DATA_DIR, const char* filename1, const char* filename2);
 	~TwoFileFixture();
 	inline bool eof_in() { return eof(); }
 	inline string next_line_in() { return next_line(); }

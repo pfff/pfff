@@ -3,7 +3,7 @@
 #include <string.h>
 #include "PfffPostHashing.h"
 
-void timings(long len, char* title) {
+void timings(long len, const char* title) {
 	Md5Hasher md5;
 	Poly1305AesHasher paes(1);
 	ostringstream o1, o2;

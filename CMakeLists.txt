@@ -47,7 +47,10 @@ add_subdirectory(tests)
 
 enable_testing()
 add_test(unit-tests tests/src/pffftest "${Pfff_SOURCE_DIR}/tests/data")
-
+add_custom_target(testv 
+	          make test "ARGS=-V"
+		  DEPENDS tests/src/pffftest
+		  COMMENT "Running tests (verbose output)")
 
 # Install headers
 install(DIRECTORY src/ DESTINATION include/

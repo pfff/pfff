@@ -5,15 +5,21 @@
 #include "OptionManager.h"
 #include <string.h>
 
+#include <iostream>
+#include <errno.h>
+#include <cstdlib>
+using namespace std;
+
 // -------------- LongIntOption --------------
 void LongIntOption::prepare() {
 	*target_variable = default_value;
 }
 
-bool LongIntOption::process(char* value) {
-	char remainder[2];
-	int numfields = sscanf(value, "%ld%1s", target_variable, remainder);
-	return (numfields == 1);
+bool LongIntOption::process(const char* value) {
+	char* endptr;
+	errno = 0;
+	*target_variable = strtol(value, &endptr, 0);
+	return (errno == 0) && (*endptr == '\0');
 }
 
 const char* LongIntOption::expected_type() { return "an integer < 2147483647"; }
@@ -23,10 +29,11 @@ void PositiveLongIntOption::prepare() {
 	*target_variable = default_value;
 }
 
-bool PositiveLongIntOption::process(char* value) {
-	char remainder[2];
-	int numfields = sscanf(value, "%ld%1s", target_variable, remainder);
-	return (numfields == 1 && *(target_variable) > 0);
+bool PositiveLongIntOption::process(const char* value) {
+	char* endptr;
+	errno = 0;
+	*target_variable = strtol(value, &endptr, 0);
+	return (errno == 0) && (*endptr == '\0') && (*(target_variable) > 0);
 }
 
 const char* PositiveLongIntOption::expected_type() { return "a positive integer < 2147483647"; }
@@ -36,10 +43,11 @@ void BoundedLongIntOption::prepare() {
 	*target_variable = default_value;
 }
 
-bool BoundedLongIntOption::process(char* value) {
-	char remainder[2];
-	int numfields = sscanf(value, "%ld%1s", target_variable, remainder);
-	return (numfields == 1 && *(target_variable) >= min_value && *(target_variable) <= max_value);
+bool BoundedLongIntOption::process(const char* value) {
+	char* endptr;
+	errno = 0;
+	*target_variable = strtol(value, &endptr, 0);
+	return (errno == 0) && (*endptr == '\0') && (*(target_variable) >= min_value) && (*(target_variable) <= max_value);
 }
 
 const char* BoundedLongIntOption::expected_type() { return expected_type_str; }
@@ -49,7 +57,7 @@ void CharPtrOption::prepare() {
 	*target_variable = default_value;
 }
 
-bool CharPtrOption::process(char* value) {
+bool CharPtrOption::process(const char* value) {
 	*target_variable = value;
 	return (value != NULL);
 }
@@ -62,7 +70,7 @@ const char* CharPtrOption::expected_type() { return "a string"; }
 /**
  * Initialize all options and read from cmdline. Return false on failure. Reports errors on stderr.
  */
-bool OptionManager::read_from_cmdline(int argc, char* argv[]) {
+bool OptionManager::read_from_cmdline(int argc, char* const argv[]) {
 	// Initialize option values and prepare getopt_long parameters
 	option long_options[num_options+1]; 
 	memset(long_options, 0, sizeof(option)*(num_options+1));
@@ -163,14 +171,14 @@ void OptionManager::print_option_help(ostream& out) {
 /**
  * Used on OptionManager initialization, adds a "group"-type OptionDef to the vector of available options.
  */
-void OptionManager::add_group(char* name) {
+void OptionManager::add_group(const char* name) {
 	options.push_back(OptionDef(OptionDef::OPTION_GROUP, NULL, 0, NULL, NULL, NULL, name));
 }
 
 /**
  * Used on OptionManager initialization, adds a "unparameterized"-type OptionDef to the vector of available options.
  */
-void OptionManager::add_unparameterized(char* long_option, char short_option, int* presence_counter, char* description) {
+void OptionManager::add_unparameterized(const char* long_option, char short_option, int* presence_counter, const char* description) {
 	num_options++;
 	int l = long_option == NULL ? 0 : strlen(long_option);
 	max_option_len = max_option_len >= l ? max_option_len : l;
@@ -184,7 +192,7 @@ void OptionManager::add_unparameterized(char* long_option, char short_option, in
 /**
  * Used on OptionManager initialization, adds a "parameterized"-type OptionDef to the vector of available options.
  */
-void OptionManager::add_parameterized(char* long_option, char short_option, int* presence_counter, OptionReader* option_reader, char* param_name, char* description) {
+void OptionManager::add_parameterized(const char* long_option, char short_option, int* presence_counter, OptionReader* option_reader, const char* param_name, const char* description) {
 	num_options++; num_parameterized++;
 	int l = long_option == NULL ? 0 : strlen(long_option) + strlen(param_name) + 1;
 	max_option_len = max_option_len >= l ? max_option_len : l;

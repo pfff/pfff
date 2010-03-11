@@ -4,27 +4,6 @@
  */
 #include "file_utils.h"
 #include <dirent.h>
-#include <sys/stat.h>
-#ifdef __MINGW32__
-	// Mingws uses struct _stati64 and function _stati64, in place of POSIX's stat64
-	#define stat64 _stati64
-#endif
-
-
-/**
- * Returns 1 if the given filename is a directory, 0 if not, and -1 if an error occurs (use strerror(errno) to figure out the reason).
- */
-int is_directory(string filename) {
-	struct stat64 s;
-	int result;
-	for (int i = 0; i < 10; i++) { // If stat returns EAGAIN, we'll try this 10 times
-		result = stat64(filename.c_str(), &s);
-		if (result == 0 || errno != EAGAIN) break;
-	}
-	if (result != 0) return -1;
-	return S_ISDIR(s.st_mode) ? 1 : 0;
-}
-
 
 #ifdef _WIN32
  #define PATH_SEP "\\"

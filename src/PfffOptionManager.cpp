@@ -75,7 +75,9 @@ PfffOptionManager::PfffOptionManager(): OptionManager(), TEST_MODE(false) {
 			"proceed to process all files. When this option is\n"
 			"given, pfff will break as soon as any error occurs.");
 		add_unparameterized("recursive", 'R', &recursive, 
-		    "Recurse into subdirectories. Ignored for FTP access\n");
+		    "Recurse into subdirectories. Ignored for FTP access.");
+		add_unparameterized("no-symlinks", 'L', &no_symlinks,
+		    "Ignore symlinks.");
 	add_group("Experimental Options");
 		add_parameterized("ftp-host", 'F', &ftp_given, new CharPtrOption(&ftp_host, ""), "<hostname>",
 			"Interpret all files as absolute paths on the\n"
@@ -92,7 +94,7 @@ PfffOptionManager::PfffOptionManager(): OptionManager(), TEST_MODE(false) {
 /**
  * Reads options from command line. On any failure prints error message and dies.
  */
-void PfffOptionManager::init_from_cmdline_or_die(int argc, char* argv[]) {
+void PfffOptionManager::init_from_cmdline_or_die(int argc, char* const argv[]) {
 	if (!read_from_cmdline(argc, argv)) die_with_error("");
 	validate_or_die();
 }

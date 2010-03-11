@@ -21,7 +21,7 @@ public:
 	// procedure throw a string.
 	bool TEST_MODE;
 		
-	char* format;
+	const char* format;
 	long  key;
 	int   key_given;
 	long  block_count;
@@ -37,22 +37,23 @@ public:
 	int   request_cost_given;
 	int   fail_on_error;
 	int   recursive;
-	
+	int   no_symlinks;
+
 	int   ftp_given;
-	char* ftp_host;
+	const char* ftp_host;
 	int   ftp_debug;
 	//long  ftp_request_cost;
 	//int   ftp_request_cost_given;
 	
 	string error_message;
-    PfffOptions options;
+	PfffOptions options;
 	
 	PfffOptionManager();
 	
 	/**
 	 * Reads options from command line. On any failure prints error message and dies.
 	 */
-	void init_from_cmdline_or_die(int argc, char* argv[]);
+	void init_from_cmdline_or_die(int argc, char* const argv[]);
 	
 	/**
 	 * Dumps a long 'help' message describing all the options to a given ostream.
