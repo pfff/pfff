@@ -18,6 +18,11 @@ using std::endl;
 using std::string;
 using std::vector;
 
+#ifdef __MINGW32__   // Alternatively, could've been _WIN32
+ #define lstat stat
+ #define S_ISLNK(m) 0
+#endif
+
 /**
  * Abstract interface used by the process_files function below.
  */

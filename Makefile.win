@@ -5,11 +5,11 @@ CPP  = g++.exe -D__DEBUG__
 CC   = gcc.exe -D__DEBUG__
 WINDRES = windres.exe
 RES  = 
-OBJ  = build/pfff.o build/output_utils.o build/PfffBlockReader.o build/PfffBlockSampleGenerator.o build/PfffOptionManager.o build/PfffHasher.o build/PfffOutputFormatter.o build/PfffPostHashing.o build/Socket.o build/FtpSocket.o build/PfffFtpBlockReader.o build/PfffCLib.o build/PfffOptions.o $(RES)
-LINKOBJ  = build/pfff.o build/output_utils.o build/PfffBlockReader.o build/PfffBlockSampleGenerator.o build/PfffOptionManager.o build/PfffHasher.o build/PfffOutputFormatter.o build/PfffPostHashing.o build/Socket.o build/FtpSocket.o build/PfffFtpBlockReader.o build/PfffCLib.o build/PfffOptions.o $(RES)
+OBJ  = build/pfff.o build/output_utils.o build/PfffBlockReader.o build/PfffBlockSampleGenerator.o build/PfffOptionManager.o build/PfffHasher.o build/PfffOutputFormatter.o build/PfffPostHashing.o build/Socket.o build/FtpSocket.o build/PfffFtpBlockReader.o build/PfffCLib.o build/PfffOptions.o build/file_utils.o $(RES)
+LINKOBJ  = build/pfff.o build/output_utils.o build/PfffBlockReader.o build/PfffBlockSampleGenerator.o build/PfffOptionManager.o build/PfffHasher.o build/PfffOutputFormatter.o build/PfffPostHashing.o build/Socket.o build/FtpSocket.o build/PfffFtpBlockReader.o build/PfffCLib.o build/PfffOptions.o build/file_utils.o $(RES)
 LIBS =  -L"C:/Dev/Dev-Cpp/lib" -lws2_32  -g3 
-INCS =  -I"C:/Dev/Dev-Cpp/include"  -I"include"  -I"libsrc/mtwister"  -I"libsrc/md5"  -I"libsrc/poly1305aes-20050218"  -I"libsrc/poly1305aes-embed"  -I"libsrc/optionmanager"  -I"libsrc/socket" 
-CXXINCS =  -I"C:/Dev/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev/Dev-Cpp/include"  -I"include"  -I"libsrc/mtwister"  -I"libsrc/md5"  -I"libsrc/poly1305aes-20050218"  -I"libsrc/poly1305aes-embed"  -I"libsrc/optionmanager"  -I"libsrc/socket" 
+INCS =  -I"C:/Dev/Dev-Cpp/include"  -I"libsrc/mtwister"  -I"libsrc/md5"  -I"libsrc/poly1305aes-20050218"  -I"libsrc/poly1305aes-embed"  -I"libsrc/optionmanager"  -I"libsrc/socket" 
+CXXINCS =  -I"C:/Dev/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev/Dev-Cpp/include"  -I"libsrc/mtwister"  -I"libsrc/md5"  -I"libsrc/poly1305aes-20050218"  -I"libsrc/poly1305aes-embed"  -I"libsrc/optionmanager"  -I"libsrc/socket" 
 BIN  = build/pfff.exe
 CXXFLAGS = $(CXXINCS)   -fexpensive-optimizations -g3
 CFLAGS = $(INCS)   -fexpensive-optimizations -g3
@@ -65,3 +65,6 @@ build/PfffCLib.o: src/PfffCLib.cpp
 
 build/PfffOptions.o: src/PfffOptions.cpp
 	$(CPP) -c src/PfffOptions.cpp -o build/PfffOptions.o $(CXXFLAGS)
+
+build/file_utils.o: src/file_utils.cpp
+	$(CPP) -c src/file_utils.cpp -o build/file_utils.o $(CXXFLAGS)
