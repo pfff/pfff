@@ -31,23 +31,23 @@
 #define SOCKET_H
 
 #ifdef WIN32
-	#include <winsock2.h>
-	#define MSG_WAITALL 0
-	#define EWOULDBLOCK WSAEWOULDBLOCK
+    #include <winsock2.h>
+    #define MSG_WAITALL 0
+    #define EWOULDBLOCK WSAEWOULDBLOCK
 #else
-	#include <arpa/inet.h>
-	#include <errno.h>
-	#include <netdb.h>
-	#include <netinet/in.h>
-	#include <sys/ioctl.h>
-	#include <sys/socket.h>
-	#include <sys/types.h>
+    #include <arpa/inet.h>
+    #include <errno.h>
+    #include <netdb.h>
+    #include <netinet/in.h>
+    #include <sys/ioctl.h>
+    #include <sys/socket.h>
+    #include <sys/types.h>
 
-	#define closesocket(x) close(x)
-	#define ioctlsocket(a,b,c) ioctl(a,b,c)
-	typedef int SOCKET;
-	#define INVALID_SOCKET -1
-	#define SOCKET_ERROR -1
+    #define closesocket(x) close(x)
+    #define ioctlsocket(a,b,c) ioctl(a,b,c)
+    typedef int SOCKET;
+    #define INVALID_SOCKET -1
+    #define SOCKET_ERROR -1
 #endif
 
 #include <string>

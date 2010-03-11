@@ -99,5 +99,5 @@ int main(int argc, char* argv[]) {
     bool success = process_files(engine->option_manager.parameters, recursive, engine->option_manager.no_symlinks, engine->option_manager.fail_on_error, engine);
     engine->quit();
     delete engine;
-	return success ? 0: 1;
+    return success ? 0: 1;
 }

@@ -21,59 +21,59 @@ using std::ostream;
  */
 struct PfffFindDuplicatesOptionManager: public OptionManager {
 public:
-	// Used to disable "exit(2)" in die_with_error. Instead, makes the
-	// procedure throw a string.
-	bool TEST_MODE;
-	
-	long  key;
-	int   key_given;
-	long  block_count;
-	long  block_size;
-	long  header_block_count;
-	int   without_replacement;
-	int   with_size;
+    // Used to disable "exit(2)" in die_with_error. Instead, makes the
+    // procedure throw a string.
+    bool TEST_MODE;
+    
+    long  key;
+    int   key_given;
+    long  block_count;
+    long  block_size;
+    long  header_block_count;
+    int   without_replacement;
+    int   with_size;
 
-	int   help;
-	long  request_cost;
-	int   request_cost_given;
-	int   fail_on_error;
-	int   recursive;
-	int   no_symlinks;
+    int   help;
+    long  request_cost;
+    int   request_cost_given;
+    int   fail_on_error;
+    int   recursive;
+    int   no_symlinks;
 
-	int   ftp_given;
-	const char* ftp_host;
-	int   ftp_debug;
-	
-	string error_message;
-	PfffOptions options;
-	
-	PfffFindDuplicatesOptionManager();
-	
-	/**
-	 * Reads options from command line. On any failure prints error message and dies.
-	 */
-	void init_from_cmdline_or_die(int argc, char* const argv[]);
-	
-	/**
-	 * Dumps a long 'help' message describing all the options to a given ostream.
-	 */
-	void print_usage(ostream& out);
+    int   ftp_given;
+    const char* ftp_host;
+    int   ftp_debug;
+    
+    string error_message;
+    PfffOptions options;
+    
+    PfffFindDuplicatesOptionManager();
+    
+    /**
+     * Reads options from command line. On any failure prints error message and dies.
+     */
+    void init_from_cmdline_or_die(int argc, char* const argv[]);
+    
+    /**
+     * Dumps a long 'help' message describing all the options to a given ostream.
+     */
+    void print_usage(ostream& out);
 
-	/**
-	 * Equivalent to print(message,cerr), exit(2)
-	 */
-	void die_with_error(const string& message);
-	
-	/**
-	 * Returns true if options are valid. Otherwise returns false and sets the
-	 * error_message field.
-	 */
-	bool validate();
-	
-	/**
-	 * if (!validate()) die_with_error(error_message)
-	 */
-	void validate_or_die();	
+    /**
+     * Equivalent to print(message,cerr), exit(2)
+     */
+    void die_with_error(const string& message);
+    
+    /**
+     * Returns true if options are valid. Otherwise returns false and sets the
+     * error_message field.
+     */
+    bool validate();
+    
+    /**
+     * if (!validate()) die_with_error(error_message)
+     */
+    void validate_or_die();	
 };
 
 #endif

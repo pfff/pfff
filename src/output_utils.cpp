@@ -11,11 +11,11 @@ static const char* hex_chars = "0123456789ABCDEF";
  * Outputs given binary data in hex bytewise.
  */
 void output_hex(ostream& out, const char* buffer, long long buffer_len) {
-	for (long long i = 0; i < buffer_len; i++) {
-		char a = (buffer[i] >> 4) & 0x0f;
-		char b = (buffer[i] & 0x0f);
-		out << hex_chars[a] << hex_chars[b];
-		// TODO: It could be cool to do something like out << hex << (int)buffer[i]
-		// but somehow it doesn't work as required.
-	}
+    for (long long i = 0; i < buffer_len; i++) {
+        char a = (buffer[i] >> 4) & 0x0f;
+        char b = (buffer[i] & 0x0f);
+        out << hex_chars[a] << hex_chars[b];
+        // TODO: It could be cool to do something like out << hex << (int)buffer[i]
+        // but somehow it doesn't work as required.
+    }
 }

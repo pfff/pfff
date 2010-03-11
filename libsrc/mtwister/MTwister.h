@@ -59,48 +59,48 @@
 
 class MTwister {
 public:
-	static const int N = 624;              // length of state vector
-	static const int M = 397;              // a period parameter
-	static const uint32_t K = 0x9908B0DFU; // a magic constant
+    static const int N = 624;              // length of state vector
+    static const int M = 397;              // a period parameter
+    static const uint32_t K = 0x9908B0DFU; // a magic constant
 
-	uint32_t   state[N+1];     // state vector + 1 extra to not violate ANSI C
-	uint32_t   *next;          // next random value is computed from here
-	int        left;           // can *next++ this many times before reloading
-	
-	MTwister(): left(-1) {}
-	
-	void seed(uint32_t seed);
-	
-	uint32_t reload();
-	
-	inline uint32_t random_uint32() {
-	    uint32_t y;
-	
-	    if(--left < 0) return(reload());
-	
-	    y  = *next++;
-	    y ^= (y >> 11);
-	    y ^= (y <<  7) & 0x9D2C5680U;
-	    y ^= (y << 15) & 0xEFC60000U;
-	    return(y ^ (y >> 18));
-	}
+    uint32_t   state[N+1];     // state vector + 1 extra to not violate ANSI C
+    uint32_t   *next;          // next random value is computed from here
+    int        left;           // can *next++ this many times before reloading
+    
+    MTwister(): left(-1) {}
+    
+    void seed(uint32_t seed);
+    
+    uint32_t reload();
+    
+    inline uint32_t random_uint32() {
+        uint32_t y;
+    
+        if(--left < 0) return(reload());
+    
+        y  = *next++;
+        y ^= (y >> 11);
+        y ^= (y <<  7) & 0x9D2C5680U;
+        y ^= (y << 15) & 0xEFC60000U;
+        return(y ^ (y >> 18));
+    }
 
    	inline uint64_t random_uint64() {
-		uint64_t result = random_uint32();
-		result <<= 32;
-		result = result + random_uint32();
-		return result;
-	}
-	
-	/**
-	 * Generate an approximately uniformly random ulonglong from [0..max)
-	 * Note - we use (randomlonglong % range) to compute the value and hence
-	 * the result is slightly nonuniform (notably nonuniform if max is large).
-	 * But it's fast and should be OK for most purposes.
-	 */
-	inline uint64_t random_uint64_quick(uint64_t max) {
-		return random_uint64() % max;
-	}
+        uint64_t result = random_uint32();
+        result <<= 32;
+        result = result + random_uint32();
+        return result;
+    }
+    
+    /**
+     * Generate an approximately uniformly random ulonglong from [0..max)
+     * Note - we use (randomlonglong % range) to compute the value and hence
+     * the result is slightly nonuniform (notably nonuniform if max is large).
+     * But it's fast and should be OK for most purposes.
+     */
+    inline uint64_t random_uint64_quick(uint64_t max) {
+        return random_uint64() % max;
+    }
 };
 
 #endif

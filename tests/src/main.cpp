@@ -7,10 +7,10 @@
 #include "config.h"
 #include <iostream>
 #ifdef _WIN32
-	#include <direct.h>
-	#define chdir _chdir
+    #include <direct.h>
+    #define chdir _chdir
 #else
-	#include <unistd.h>
+    #include <unistd.h>
 #endif
 using std::cerr;
 using std::endl;

@@ -21,15 +21,15 @@ using namespace std;
  */
 #define TEST_FILEFIXTURE(Filename, Name)                    \
     struct FileFixtureFor##Name: public FileFixture {       \
-		FileFixtureFor##Name() : FileFixture(DATA_DIR, Filename) {};  \
-	};                                                      \
-	TEST_FIXTURE(FileFixtureFor##Name, Name)
+        FileFixtureFor##Name() : FileFixture(DATA_DIR, Filename) {};  \
+    };                                                      \
+    TEST_FIXTURE(FileFixtureFor##Name, Name)
 
 #define TEST_TWOFILEFIXTURE(Filename1, Filename2, Name)        \
     struct FileFixtureFor##Name: public TwoFileFixture {       \
-		FileFixtureFor##Name() : TwoFileFixture(DATA_DIR, Filename1, Filename2) {};  \
-	};                                                      \
-	TEST_FIXTURE(FileFixtureFor##Name, Name)
+        FileFixtureFor##Name() : TwoFileFixture(DATA_DIR, Filename1, Filename2) {};  \
+    };                                                      \
+    TEST_FIXTURE(FileFixtureFor##Name, Name)
 
 
 
@@ -38,16 +38,16 @@ using namespace std;
  * a sequence of values equal to one from a file.
  */
 struct FileFixture {
-	ifstream in;
-	
-	FileFixture(const char* DATA_DIR, const char* filename);
-	~FileFixture(); // Note: we don't care about virtual methods here
-	inline bool eof() { return in.eof(); }
-	inline string next_line() { return next_line(in); }
-	uint32_t next_uint32();
-	uint64_t next_uint64();
+    ifstream in;
+    
+    FileFixture(const char* DATA_DIR, const char* filename);
+    ~FileFixture(); // Note: we don't care about virtual methods here
+    inline bool eof() { return in.eof(); }
+    inline string next_line() { return next_line(in); }
+    uint32_t next_uint32();
+    uint64_t next_uint64();
 protected:
-	string next_line(ifstream& infile);
+    string next_line(ifstream& infile);
 };
 
 /** 
@@ -55,13 +55,13 @@ protected:
  * two input files (one to read input and one to read output to validate against)
  */
 struct TwoFileFixture: public FileFixture {
-	ifstream in2;
-	
-	TwoFileFixture(const char* DATA_DIR, const char* filename1, const char* filename2);
-	~TwoFileFixture();
-	inline bool eof_in() { return eof(); }
-	inline string next_line_in() { return next_line(); }
-	inline string next_line_out() { return next_line(in2); }
+    ifstream in2;
+    
+    TwoFileFixture(const char* DATA_DIR, const char* filename1, const char* filename2);
+    ~TwoFileFixture();
+    inline bool eof_in() { return eof(); }
+    inline string next_line_in() { return next_line(); }
+    inline string next_line_out() { return next_line(in2); }
 };
 
 #endif

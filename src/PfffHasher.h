@@ -23,12 +23,12 @@ using std::string;
  */
 class pfff_exception: public exception {
 public:
-	string message;
-	pfff_exception(const string message): message(message) {};
-	virtual ~pfff_exception() throw() {};
-	inline const char* what() const throw() {
-		return message.c_str();
-	}
+    string message;
+    pfff_exception(const string message): message(message) {};
+    virtual ~pfff_exception() throw() {};
+    inline const char* what() const throw() {
+        return message.c_str();
+    }
 };
 
 
@@ -39,20 +39,20 @@ public:
  */
 class PfffHasher {
 public:
-	const PfffOptions* opts;
-	PfffBlockSampleGenerator* sampler;
-	PfffOutputFormatter* formatter;
-	
-	PfffHasher(const PfffOptions* opts);
-	
-	~PfffHasher();
+    const PfffOptions* opts;
+    PfffBlockSampleGenerator* sampler;
+    PfffOutputFormatter* formatter;
+    
+    PfffHasher(const PfffOptions* opts);
+    
+    ~PfffHasher();
 
-	/**
-	 * Performs the hashing on a given input_file, writing output to a given 
-	 * output stream.
-	 * On error throws pfff_exception with the proper message.
-	 */
-	void hash(ostream& out, BlockReader* input_file);
+    /**
+     * Performs the hashing on a given input_file, writing output to a given 
+     * output stream.
+     * On error throws pfff_exception with the proper message.
+     */
+    void hash(ostream& out, BlockReader* input_file);
 };
 
 #endif

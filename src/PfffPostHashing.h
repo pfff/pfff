@@ -25,13 +25,13 @@ using std::string;
  */
 class PostHasher {
 public:
-	/**
-	 * Given a new piece of data, hashes it and writes output to a given stream.
-	 * Note that this must be a const method so that it would be reusable
-	 * between invocations for different files.
-	 */
-	virtual void output_hash(ostream& out, const char* data, long data_len) const = 0;
-	virtual ~PostHasher() {};
+    /**
+     * Given a new piece of data, hashes it and writes output to a given stream.
+     * Note that this must be a const method so that it would be reusable
+     * between invocations for different files.
+     */
+    virtual void output_hash(ostream& out, const char* data, long data_len) const = 0;
+    virtual ~PostHasher() {};
 };
 
 /**
@@ -40,12 +40,12 @@ public:
  */
 class Poly1305AesHasher: public PostHasher {
 public:
-	unsigned char secret_key[32];
-	unsigned char nonce[16];
-	
-	Poly1305AesHasher(uint32_t key);
-	
-	void output_hash(ostream& out, const char* data, long data_len) const;
+    unsigned char secret_key[32];
+    unsigned char nonce[16];
+    
+    Poly1305AesHasher(uint32_t key);
+    
+    void output_hash(ostream& out, const char* data, long data_len) const;
 };
 
 
@@ -54,7 +54,7 @@ public:
  */
 class Md5Hasher: public PostHasher {
 public:
-	void output_hash(ostream& out, const char* data, long data_len) const;
+    void output_hash(ostream& out, const char* data, long data_len) const;
 };
 
 
@@ -64,14 +64,14 @@ public:
  */
 class CsvHasher: public PostHasher {
 public:
-	const PfffOptions* opts;
-	
-	/** 
-	 * Needs to know the options in order to format csv output properly
-	 */
-	inline CsvHasher(const PfffOptions* opts): opts(opts) {}
-	
-	void output_hash(ostream& out, const char* data, long data_len) const;
+    const PfffOptions* opts;
+    
+    /** 
+     * Needs to know the options in order to format csv output properly
+     */
+    inline CsvHasher(const PfffOptions* opts): opts(opts) {}
+    
+    void output_hash(ostream& out, const char* data, long data_len) const;
 };
 
 
@@ -82,29 +82,29 @@ public:
  */
 class DebugHasher: public PostHasher {
 public:
-	const PfffOptions* opts;
-	
-	string filename;
-	unsigned long sample_size;
-	const unsigned long long* sample;
-	
-	/** 
-	 * Needs to know the options in order to format csv output properly
-	 */
-	DebugHasher(const PfffOptions* opts);
-	
-	/**
-	 * Use this before output_hash to update filename and signature fields.
-	 * (This is a hack to make this object fit with the otherwise natural 
-	 *  PostHasher interface).
-	 */
-	inline void set_debug_info(const string& filename, unsigned long sample_size, const unsigned long long* sample) {
-		this->filename = filename;
-		this->sample_size = sample_size;
-		this->sample = sample;
-	}
-	
-	void output_hash(ostream& out, const char* data, long data_len) const;
+    const PfffOptions* opts;
+    
+    string filename;
+    unsigned long sample_size;
+    const unsigned long long* sample;
+    
+    /** 
+     * Needs to know the options in order to format csv output properly
+     */
+    DebugHasher(const PfffOptions* opts);
+    
+    /**
+     * Use this before output_hash to update filename and signature fields.
+     * (This is a hack to make this object fit with the otherwise natural 
+     *  PostHasher interface).
+     */
+    inline void set_debug_info(const string& filename, unsigned long sample_size, const unsigned long long* sample) {
+        this->filename = filename;
+        this->sample_size = sample_size;
+        this->sample = sample;
+    }
+    
+    void output_hash(ostream& out, const char* data, long data_len) const;
 };
 
 

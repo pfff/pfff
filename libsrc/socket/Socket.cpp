@@ -43,7 +43,7 @@ void Socket::Start() {
     if (WSAStartup(MAKEWORD(2,0), &info)) {
       throw "Could not start WSA";
     }
-	 #endif
+     #endif
   }
   ++nofSockets_;
 }
@@ -129,19 +129,19 @@ std::string Socket::ReceiveBytes() {
 }
 
 int Socket::RecvBlocking(char* buffer, size_t length) {
-	u_long arg = 0;
+    u_long arg = 0;
     if (ioctlsocket(s_, FIONREAD, &arg) != 0)
       std::cout << "IOctlsocket failed" << std::endl;
 
-	size_t recv_remaining = length;
-	do {
-		size_t recv_this = recv(s_, buffer, recv_remaining, MSG_WAITALL);
-		if (recv_this <= 0) return recv_this;
-		if (DEBUG) std::cerr << host << ":" << port << " -> " << "DATA[" << recv_this << " bytes]" << std::endl;
-		recv_remaining -= recv_this;
-		buffer += recv_this;
-	} while (recv_remaining > 0);
-	return length;
+    size_t recv_remaining = length;
+    do {
+        size_t recv_this = recv(s_, buffer, recv_remaining, MSG_WAITALL);
+        if (recv_this <= 0) return recv_this;
+        if (DEBUG) std::cerr << host << ":" << port << " -> " << "DATA[" << recv_this << " bytes]" << std::endl;
+        recv_remaining -= recv_this;
+        buffer += recv_this;
+    } while (recv_remaining > 0);
+    return length;
 }
 
 std::string Socket::ReceiveLine() {
@@ -169,8 +169,8 @@ std::string Socket::ReceiveLine() {
     ret += r;
     if (r == '\n') {
   		if (DEBUG) std::cerr << host << ":" << port << " -> " << ret;
-		return ret;
-	}
+        return ret;
+    }
   }
 }
 
@@ -311,7 +311,7 @@ bool SocketSelect::Readable(Socket const* const s) {
 
 int ws_lasterror() {
 #ifdef WIN32
-	return WSAGetLastError();
+    return WSAGetLastError();
 #else
    return errno;
 #endif
@@ -349,9 +349,9 @@ std::string ws_strerror(int error_code) {
      // FormatMessage to FORMAT_MESSAGE_ALLOCATE_BUFFER,
      // and it does so using LocalAlloc
      // Gotcha!  I guess.
-	 #else
-	  std::string result = strerror(errCode);
-	 #endif
+     #else
+      std::string result = strerror(errCode);
+     #endif
      return result;
 }
 

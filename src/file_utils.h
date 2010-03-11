@@ -50,39 +50,39 @@ template <typename String> bool process_files(vector<String> files, bool recursi
     int processed_count = 0;
     bool result = true;
     
-	// Now hash files one by one
+    // Now hash files one by one
     for (int i = 0; i < files.size(); i++) {
         processed_count++;
         bool current_result;
-		struct stat s, ls;
-		int stat_error, lstat_error;
-		const char* filename = as_charptr(files[i]); // We need a char* to invoke stat/lstat
-		
-		// Do we need to check for symlinks?
-		if (no_symlinks)
-			lstat_error = lstat(filename, &ls);
-		else {
-			lstat_error = 0;
-			ls.st_mode = 0;
-		}
+        struct stat s, ls;
+        int stat_error, lstat_error;
+        const char* filename = as_charptr(files[i]); // We need a char* to invoke stat/lstat
         
-		// Do we need to check whether file is a directory?
-		if (recursive)
-			stat_error = lstat_error || stat(filename, &s);
-		else {
-			stat_error = lstat_error;
-			s.st_mode = 0;
-		}
-		
+        // Do we need to check for symlinks?
+        if (no_symlinks)
+            lstat_error = lstat(filename, &ls);
+        else {
+            lstat_error = 0;
+            ls.st_mode = 0;
+        }
+        
+        // Do we need to check whether file is a directory?
+        if (recursive)
+            stat_error = lstat_error || stat(filename, &s);
+        else {
+            stat_error = lstat_error;
+            s.st_mode = 0;
+        }
+        
         if (stat_error != 0) {
             // Error occured when statting:
             cerr << "Error: " << strerror(errno) << endl;
             current_result = false;
         }
-		else if (no_symlinks && S_ISLNK(ls.st_mode)) {
-			// It's a symlink and we must ignore it
-			cerr << "Note: ignoring symlink " << filename << endl;
-		}
+        else if (no_symlinks && S_ISLNK(ls.st_mode)) {
+            // It's a symlink and we must ignore it
+            cerr << "Note: ignoring symlink " << filename << endl;
+        }
         else if (recursive && S_ISDIR(s.st_mode)) {
             // It's a valid directory and we should recurse
             vector<string> dir_contents;
@@ -94,10 +94,10 @@ template <typename String> bool process_files(vector<String> files, bool recursi
                 current_result = process_files(dir_contents, recursive, no_symlinks, fail_on_error, p, true);
             }
         }
-		else {
-			// We don't care whether this is a directory or symlink, just pass it to the processor
+        else {
+            // We don't care whether this is a directory or symlink, just pass it to the processor
             current_result = p->process_file(files[i]);
-		}
+        }
 
         if (!current_result) {
             result = false;

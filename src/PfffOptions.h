@@ -39,16 +39,16 @@ struct PfffOptions {
     
     // Hash algorithm options
     unsigned char output_format;  // POLY1305AES=1, MD5=2, CSV=3, DEBUG=10
-	uint32_t key;                 // See help.
-	uint16_t block_count;
-	uint16_t block_size;	
+    uint32_t key;                 // See help.
+    uint16_t block_count;
+    uint16_t block_size;	
     uint32_t header_block_count;
     unsigned char without_replacement;
     unsigned char with_size;
     
     // Output options
  	unsigned char no_prefix;
-	unsigned char no_filename;
+    unsigned char no_filename;
 } __attribute__((packed));
 
 extern "C" {

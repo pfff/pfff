@@ -17,15 +17,15 @@ using std::string;
  */
 class FtpBlockReader: public BlockReader {
 public:
-	// ftp_connection must be an opened/authenticated FTP control connection socket
-	// with TYPE I command executed. The block reader will not close it
-	FtpBlockReader(FtpClientSocket* ftp_connection, const char* filename);
-	~FtpBlockReader();
-	long long _size();
-	bool next_block(unsigned long long block_start, unsigned long block_size);
+    // ftp_connection must be an opened/authenticated FTP control connection socket
+    // with TYPE I command executed. The block reader will not close it
+    FtpBlockReader(FtpClientSocket* ftp_connection, const char* filename);
+    ~FtpBlockReader();
+    long long _size();
+    bool next_block(unsigned long long block_start, unsigned long block_size);
 
 protected:
-	FtpClientSocket* ftp_connection;
+    FtpClientSocket* ftp_connection;
 };
 
 

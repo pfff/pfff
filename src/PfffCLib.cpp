@@ -19,21 +19,21 @@ using std::strncpy;
 extern "C" int pfffclib_hash_file(const PfffOptions* opts, const char* filename, unsigned long request_cost, char* output, unsigned int output_len, char* error_message, unsigned int error_message_len) {
     int result = 0;
     PfffHasher* hasher = new PfffHasher(opts);
-	BlockReader* input_file = new LocalFileBlockReader(filename);
-	if (request_cost > 0) input_file = new BufferingBlockReader(input_file, request_cost);
-	
-	ostringstream out;
-	try {
-		hasher->hash(out, input_file);
-		strncpy(output, out.str().c_str(), output_len);
-	}
-	catch(pfff_exception& e) {
-		if (error_message != NULL) 
+    BlockReader* input_file = new LocalFileBlockReader(filename);
+    if (request_cost > 0) input_file = new BufferingBlockReader(input_file, request_cost);
+    
+    ostringstream out;
+    try {
+        hasher->hash(out, input_file);
+        strncpy(output, out.str().c_str(), output_len);
+    }
+    catch(pfff_exception& e) {
+        if (error_message != NULL) 
             strncpy(error_message, e.what(), error_message_len);
-		result = -1;
-	}
-	delete input_file;
-	delete hasher;
-	return result;
+        result = -1;
+    }
+    delete input_file;
+    delete hasher;
+    return result;
 }
 

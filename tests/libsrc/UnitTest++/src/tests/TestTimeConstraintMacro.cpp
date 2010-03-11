@@ -18,13 +18,13 @@ TEST (TimeConstraintMacroUsesCorrectInfo)
     RecordingReporter reporter;
     {
         UnitTest::TestResults testResults(&reporter);
-		ScopedCurrentTest scopedResults(testResults);
+        ScopedCurrentTest scopedResults(testResults);
 
         UNITTEST_TIME_CONSTRAINT(10); testLine = __LINE__;
         UnitTest::TimeHelpers::SleepMs(20);
     }
 
-	using namespace std;
+    using namespace std;
 
     CHECK_EQUAL(1, reporter.testFailedCount);
     CHECK(strstr(reporter.lastFailedFile, __FILE__));

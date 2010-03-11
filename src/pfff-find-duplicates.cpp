@@ -21,13 +21,13 @@ using std::ostringstream;
 template <typename HashType, typename ContentType> class DuplicateTracker {
 public:
     typedef map<HashType, vector<ContentType> > duplicates_map; // Map(Hash --> Content)
-	map<HashType, vector<ContentType> > groups;
-	vector<HashType> non_singleton_groups;                   // Collects hashes which have multiple filenames
+    map<HashType, vector<ContentType> > groups;
+    vector<HashType> non_singleton_groups;                   // Collects hashes which have multiple filenames
 
     void process_entry(const HashType& hash, const ContentType& content) {
-		// Have we seen this hash already?
-		typename map<HashType ,vector<string> >::iterator f = groups.find(hash);
-		if (f != groups.end()) { 
+        // Have we seen this hash already?
+        typename map<HashType ,vector<string> >::iterator f = groups.find(hash);
+        if (f != groups.end()) { 
             // We have already seen this hash!
             // Append to the list
             f->second.push_back(content);
@@ -128,8 +128,8 @@ public:
     	try {
             // TODO: Technically this place can be streamlined so that we don't need the ostringstream but instead work directly on hashed bytes.
             ostringstream out;
-			hasher->hash(out, input_file);
-			dup_tracker.process_entry(out.str(), filename);
+            hasher->hash(out, input_file);
+            dup_tracker.process_entry(out.str(), filename);
     	}
     	catch(pfff_exception& e) {
     		cerr << "Error: " << e.what() << endl;
@@ -147,5 +147,5 @@ int main(int argc, char* argv[]) {
     bool success = process_files(engine->option_manager.parameters, recursive, engine->option_manager.no_symlinks, engine->option_manager.fail_on_error, engine);
     engine->quit();
     delete engine;
-	return success ? 0: 1;
+    return success ? 0: 1;
 }
