@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
 project(Pfff)
 
+# Compile optimized
+set(CMAKE_C_FLAGS	"-O3")
+set(CMAKE_CXX_FLAGS	"-O3")
+
 # Libraries
 add_subdirectory(libsrc/md5)
 add_subdirectory(libsrc/mtwister)
@@ -83,3 +87,7 @@ else()
 endif()
 set(CPACK_PACKAGE_EXECUTABLES "pfff" "Pfff")
 include(CPack)
+
+
+# Examples
+add_subdirectory(examples)

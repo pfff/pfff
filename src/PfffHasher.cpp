@@ -3,9 +3,6 @@
  * License:   The terms of use of this software and its source code are defined by the BSD license.
  */
 #include "PfffHasher.h"
-#include <iostream>
-using std::cout;
-using std::endl;
 
 PfffHasher::PfffHasher(const PfffOptions* opts): opts(opts) {
     formatter = new PfffOutputFormatter(opts);
