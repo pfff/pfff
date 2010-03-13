@@ -36,6 +36,8 @@ private:
 
 #else
 
+#include <sys/time.h>
+
 class Timer
 {
 public:

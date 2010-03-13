@@ -5,6 +5,7 @@
 #include "utils.h"
 #include <fstream>
 #include <iostream>
+#include <errno.h>
 #include <sys/stat.h>
 #ifdef _WIN32
     #include "windows.h"
