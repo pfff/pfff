@@ -1,24 +1,24 @@
 #ifndef __poly1305aes_select_arch__
 #define __poly1305aes_select_arch__
 
-//#if defined(__tune_pentiumpro__) || defined(__pentiumpro)
+#if defined(__tune_pentiumpro__) || defined(__pentiumpro)
 // PPro platform
-//	#define AES_S            "aes_ppro.s"
-//	#define AES_CONSTANTS_S  "aes_ppro_constants.s"
-//	#define POLY1305_S       "poly1305_ppro.s"
-//	#define POLY1305_CONSTANTS_S        "poly1305_ppro_constants.s"
-//	#define POLY1305AES_AUTHENTICATE_C  "poly1305aes_ppro_authenticate.c"
-//	#define POLY1305AES_CLAMP_C         "poly1305aes_ppro_clamp.c"
-//	#define POLY1305AES_ISEQUAL_S       "poly1305aes_ppro_isequal.s"
-//	#define POLY1305AES_VERIFY_C        "poly1305aes_ppro_verify.c"
-//	#define POLY1305AES_H               "poly1305aes_ppro.h"
-//	#define AES_C                       "empty.c"
-//	#define AES_CONSTANTS_C             "empty.c"
-//	#define POLY1305_C                  "empty.c"
-//	#define POLY1305_CONSTANTS_C        "empty.c"
-//	#define POLY1305AES_ISEQUAL_C       "empty.c"
-#if defined(__tune_athlon__) || defined(__athlon)
-//#elif defined(__tune_athlon__) || defined(__athlon)
+	#define AES_S            "aes_ppro.s"
+	#define AES_CONSTANTS_S  "aes_ppro_constants.s"
+	#define POLY1305_S       "poly1305_ppro.s"
+	#define POLY1305_CONSTANTS_S        "poly1305_ppro_constants.s"
+	#define POLY1305AES_AUTHENTICATE_C  "poly1305aes_ppro_authenticate.c"
+	#define POLY1305AES_CLAMP_C         "poly1305aes_ppro_clamp.c"
+	#define POLY1305AES_ISEQUAL_S       "poly1305aes_ppro_isequal.s"
+	#define POLY1305AES_VERIFY_C        "poly1305aes_ppro_verify.c"
+	#define POLY1305AES_H               "poly1305aes_ppro.h"
+	#define AES_C                       "empty.c"
+	#define AES_CONSTANTS_C             "empty.c"
+	#define POLY1305_C                  "empty.c"
+	#define POLY1305_CONSTANTS_C        "empty.c"
+	#define POLY1305AES_ISEQUAL_C       "empty.c"
+//#if defined(__tune_athlon__) || defined(__athlon)
+#elif defined(__tune_athlon__) || defined(__athlon)
 // Athlon platform
     #define AES_S            "aes_athlon.s"
     #define AES_CONSTANTS_S  "aes_athlon_constants.s"

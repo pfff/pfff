@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <string.h>
 using std::cerr;
 using std::endl;
 using std::string;

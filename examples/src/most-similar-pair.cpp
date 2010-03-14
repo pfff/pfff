@@ -5,11 +5,13 @@
  * Copyright: 2009-2010, Konstantin Tretyakov, Pjotr Prins, Swen Laur
  * License:   The terms of use of this software and its source code are defined by the BSD license.
  */
+#include <algorithm>
 #include <iostream>
 #include "utils.h"
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::sort;
 
 
 struct ComparedPair {

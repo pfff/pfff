@@ -2,7 +2,7 @@ set(sources AssertException Checks CurrentTest DeferredTestReporter DeferredTest
             MemoryOutStream ReportAssert Test TestDetails TestList TestReporter TestReporterStdout
             TestResults TestRunner TimeConstraint XmlTestReporter)
 
-if(WIN32)
+if(WIN32 AND NOT CYGWIN)
 	list(APPEND sources Win32/TimeHelpers)
 else()
 	list(APPEND sources Posix/TimeHelpers Posix/SignalTranslator)

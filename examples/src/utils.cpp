@@ -14,6 +14,11 @@
     // Mingws uses struct _stati64 and function _stati64, in place of POSIX's stat64
     #define stat64 _stati64
 #endif
+#ifdef __CYGWIN__
+	// struct stat64 is not used in Cygwin, just use struct stat. It's 64 bit aware.
+	// http://www.cygwin.com/faq/faq.programming.html#faq.programming.stat64
+	#define stat64 stat
+#endif
 using std::cerr;
 using std::cout;
 using std::endl;
