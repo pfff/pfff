@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(Pfff)
 
-# Compile optimized
-set(CMAKE_C_FLAGS	"-O3")
-set(CMAKE_CXX_FLAGS	"-O3")
+# Compile optimization.
+# NB! -O2 or -O3 produces faulty code (I guess due to poly1305aes somewhere).
+add_definitions(-O1)
 
 # Libraries
 add_subdirectory(libsrc/md5)
