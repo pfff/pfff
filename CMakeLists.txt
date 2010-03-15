@@ -4,6 +4,8 @@ project(Pfff)
 # Compile optimization.
 # NB! -O2 or -O3 produces faulty code (I guess due to poly1305aes somewhere).
 add_definitions(-O1)
+#add_definitions(-pg)
+#set(CMAKE_EXE_LINKER_FLAGS -pg)
 
 # Libraries
 add_subdirectory(libsrc/md5)

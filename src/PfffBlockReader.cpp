@@ -39,7 +39,8 @@ bool BlockReader::read_header(unsigned long block_size, unsigned long n_blocks) 
 // ------------- LocalFileBlockReader -------------
 LocalFileBlockReader::LocalFileBlockReader(const char* filename):
     BlockReader(filename),
-    input_file(filename, ios::binary) { };
+    input_file(filename, ios::binary) { 
+};
 
 LocalFileBlockReader::~LocalFileBlockReader() {
     input_file.close();
@@ -81,14 +82,13 @@ long long LocalFileBlockReader::_size() {
     }
 }
 
-#include "output_utils.h"
-
 bool LocalFileBlockReader::next_block(unsigned long long block_start, unsigned long block_size) {
     input_file.seekg(block_start, ios::beg);
     input_file.read(buffer, block_size);
     
     // Was there an error?
     if (input_file.bad()) {
+    
         error_message = "File ";
         error_message = error_message + filename + " could not be read.";
         return false;

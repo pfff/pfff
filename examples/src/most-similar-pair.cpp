@@ -12,7 +12,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::sort;
-
+using namespace FileUtils;
 
 struct ComparedPair {
     int i;
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
     } */
     
     // Scan all filenames from the given file
-    vector<string> filenames = getlines(argv[1]);
+    vector<string> filenames = read_lines(argv[1]);
     
     // Compute a signature for each file
     cerr << "### Computing signatures" << endl;
