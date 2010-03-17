@@ -21,9 +21,9 @@
 #
 #   28 Gb GEO - 7407 files (avg 4Mb files) 2MHz; 1Gb
 #
-#   real    0m42.416s
-#   user    0m0.052s
-#   sys     0m0.376s
+#   real    11m3.978s
+#   user    1m47.395s
+#   sys     1m10.156s
 #
 # Running naive-fp just printing file positions (--positions) - baseline version 
 #
