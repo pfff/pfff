@@ -19,6 +19,12 @@
 #   user    0m23.093s
 #   sys     0m7.056s
 #
+#   28 Gb GEO - 7407 files (avg 4Mb files) 2MHz; 1Gb
+#
+#   real    0m42.416s
+#   user    0m0.052s
+#   sys     0m0.376s
+#
 # Running naive-fp just printing file positions (--positions) - baseline version 
 #
 #   time ./naive-fp.rb --positions /mnt/tmp > /dev/null
@@ -40,6 +46,12 @@
 #   real    0m19.953s
 #   user    0m0.172s
 #   sys     0m0.188s
+# 
+#   28 Gb GEO - 7407 files (avg 4Mb files) 2MHz; 1Gb
+#
+#   real    7m42.426s
+#   user    0m2.644s
+#   sys     0m15.381s
 
 SAMPLENUM=5
 SAMPLESIZE=5
