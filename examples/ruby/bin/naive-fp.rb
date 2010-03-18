@@ -152,7 +152,7 @@ def get_fp fn
       end
     end
   rescue
-    raise "Error reading #{fn} at position #{pos}"
+    $stderr.print "Error reading #{fn} at position #{pos}"
   end
   fp.map { | i | i.to_s }
 end
