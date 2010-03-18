@@ -52,6 +52,19 @@
 #   real    7m42.426s
 #   user    0m2.644s
 #   sys     0m15.381s
+#
+# Full file read, taking samples at fixed positions (test Ruby read overhead)
+#
+#   time ./naive-fp.rb --full /mnt/tmp > /dev/null
+#
+#   real    4m5.299s
+#   user    0m7.668s
+#   sys     0m11.729s
+#
+#   real    3m55.845s
+#   user    0m8.101s
+#   sys     0m11.937s
+
 
 SAMPLENUM=5
 SAMPLESIZE=5
@@ -68,11 +81,20 @@ require 'optparse'
 require 'ostruct'
 
 $options = OpenStruct.new()
+$options.samplenum = SAMPLENUM
 
 opts = OptionParser.new do |opts|
   opts.on("--positions", "Only output sampling positions") do | b |
     $options.output = :positions
   end
+  opts.on("--full", "Read full file before sampling positions") do | b |
+    $options.output = :full
+  end
+  opts.on("--samples num", Integer, "Number of samples (default #{SAMPLENUM}") do | num |
+    $options.samplenum = num
+  end
+
+
 
   opts.on_tail("-h", "--help", "Print this help") {
     print(usage)
@@ -110,12 +132,17 @@ def get_fp fn
     f = File.open(fn,'rb')
   end
   begin
+    if f and $options.output == :full
+      # force the file into the cache
+      dummy = f.read
+    end
     fp = []
     filesize = File.size(fn)
-    return [-1] if filesize < SAMPLENUM*SAMPLESIZE
-    skipsize = filesize/(SAMPLENUM+1)
+    # skip really small files
+    return [-1] if filesize < $options.samplenum*SAMPLESIZE
+    skipsize = filesize/($options.samplenum+1)
     pos = 0
-    (0..SAMPLESIZE-1).each do | hop |
+    (0..$options.samplenum-1).each do | hop |
       pos += skipsize
       case $options.output
         when :positions
