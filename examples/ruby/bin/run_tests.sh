@@ -17,83 +17,115 @@
 #
 #   run_tests.sh /export/music &> host.log
 #
+# timins without context:
+#
+#   run_tests.sh -q /export/music &> host.log
+# 
 # (to capture the timings you need to redirect stderr)
 
 dir=$1
+if [ "$dir" = "-q" ]; then
+  echo "verbose mode"
+  shift
+  dir=$1
+else
+  verbose=1
+fi
 if [ -z $dir ] ; then
   dir=/export/music
 fi
+echo "Dir="$dir
 
-function fetch_hostinfo {
-  echo Running tests on `hostname`
-  echo ---
-  dmesg|egrep -i ata\|ide\|scsi
-  cat /proc/cpuinfo
-  free
-  df
-  mount
+function do_show() {
+  if [ ! -z $verbose ]; then
+    echo $*
+  fi
+}
+
+function fetch_hostinfo() {
+  if [ ! -z $verbose ]; then
+    do_show Running tests on `hostname`
+    do_show ---
+    dmesg|egrep -i ata\|ide\|scsi
+    cat /proc/cpuinfo
+    free
+    df
+    mount
+  fi
 }
 
 function empty_cache() {
-  echo "(Emptying cache)"
+  do_show "(Emptying cache)"
   # Empty disk cache
   sudo bash -c "echo 1 > /proc/sys/vm/drop_caches"
   sync
   sudo bash -c "echo 3 > /proc/sys/vm/drop_caches"
   sudo umount /mnt/tmp/ ; sudo mount --bind $dir /mnt/tmp/
-  du -sh /mnt/tmp/
-  echo "(Cache empty)"
+  if [ ! -z $verbose ]; then
+    du -sh /mnt/tmp/
+  fi
+  do_show "(Cache empty)"
 }
 
 function run() {
-  echo $*
-  time /bin/bash -c "$*" > /dev/null
+  do_show $*
+
+  if [ -z $verbose ]; then
+    env TIME="\n%e\n%U\n%S" time /bin/bash -c "$*" > /dev/null
+  else
+    time /bin/bash -c "$*" > /dev/null
+  fi
 }
 
 fetch_hostinfo
 
 empty_cache
-echo -n Number of files:
-find /mnt/tmp/ -type f |wc -l
-echo ---
-echo Test1a: Only read file sampling positions w. empty cache
+do_show ---
+do_show Test1a: Only read file sampling positions w. empty cache
 empty_cache
 run ./naive-fp.rb --positions /mnt/tmp
-echo ---
-echo Test1b: Only read file sampling positions w. cache
+do_show ---
+do_show Test1b: Only read file sampling positions w. cache
 run ./naive-fp.rb --positions /mnt/tmp
 
-echo ---
-echo Test2a: File sampling w. empty cache
+do_show ---
+do_show Test2a: File sampling w. empty cache
 empty_cache
 run ./naive-fp.rb /mnt/tmp 
-echo ---
-echo Test2b: File sampling w. cache
+do_show ---
+do_show Test2b: File sampling w. cache
 run ./naive-fp.rb /mnt/tmp 
 
-echo ---
-echo Test3a: Dense file sampling w. empty cache
+do_show ---
+do_show Test3a: Dense file sampling w. empty cache
 empty_cache
 run ./naive-fp.rb --samples 20 /mnt/tmp 
-echo ---
-echo Test3b: Dense file sampling w. cache
+do_show ---
+do_show Test3b: Dense file sampling w. cache
 run ./naive-fp.rb --samples 20 /mnt/tmp 
 
-echo ---
-echo Test4a: Full file sampling w. empty cache
+do_show ---
+do_show Test4a: Full file sampling w. empty cache
 empty_cache
 run ./naive-fp.rb --full /mnt/tmp 
-echo ---
-echo Test4b: Full file sampling w. cache
+do_show ---
+do_show Test4b: Full file sampling w. cache
 run ./naive-fp.rb --full /mnt/tmp 
 
-echo ---
-echo Test5a: MD5 w. empty cache
+do_show ---
+do_show Test5a: MD5 w. empty cache
 empty_cache
 run "/usr/bin/find /mnt/tmp -type f -print0 | xargs -0 md5sum"
-echo ---
-echo Test5b: MD5 w. cache
+do_show ---
+do_show Test5b: MD5 w. cache
 run "/usr/bin/find /mnt/tmp -type f -print0 | xargs -0 md5sum" 
 
-
+do_show -n Number of files:
+find /mnt/tmp/ -type f |wc -l
+echo ""
+do_show -n Total:
+du -sh /mnt/tmp/|awk '{ print $1 }'
+if [ -z $verbose ]; then
+  du -bs /mnt/tmp |awk '{ print $1 }'
+fi
 
