@@ -25,16 +25,15 @@
 
 dir=$1
 if [ "$dir" = "-q" ]; then
-  echo "verbose mode"
   shift
   dir=$1
 else
   verbose=1
+  echo "verbose mode"
 fi
 if [ -z $dir ] ; then
   dir=/export/music
 fi
-echo "Dir="$dir
 
 function do_show() {
   if [ ! -z $verbose ]; then
@@ -77,6 +76,7 @@ function run() {
   fi
 }
 
+do_show $dir
 fetch_hostinfo
 
 empty_cache
