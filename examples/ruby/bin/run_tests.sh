@@ -70,7 +70,7 @@ function run() {
   do_show $*
 
   if [ -z $verbose ]; then
-    env TIME="\n%e\n%U\n%S" time /bin/bash -c "$*" > /dev/null
+    env TIME="\n%e\n%U\n%S" /usr/bin/time /bin/bash -c "$*" > /dev/null
   else
     time /bin/bash -c "$*" > /dev/null
   fi
