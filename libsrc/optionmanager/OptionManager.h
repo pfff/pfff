@@ -9,6 +9,7 @@
 #ifndef __OptionManager_h__
 #define __OptionManager_h__
 #include<getopt.h> 
+#include<stdio.h>
 #include<iostream>
 #include<map>
 #include<string>

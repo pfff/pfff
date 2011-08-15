@@ -3,6 +3,12 @@ PFFF - Probabilistic Fast File Fingerprinting
 Version 1 alpha.
 
 COMPILATION:
+
+    Preparation:
+        mkdir build
+        cd build/
+        cmake ..
+
 	Under Linux:
 		make && make tests
 	

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <ostream>
 #include <string>
+#include <stdint.h>
 #include "UnitTest++.h"
 using namespace std;
 

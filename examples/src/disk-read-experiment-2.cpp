@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
 #include "TimeHelpers.h"
 #include "utils.h"
 using std::cout;
