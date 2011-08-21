@@ -6,6 +6,7 @@
  */
 #include "FtpSocket.h"
 #include <string.h>
+#include <stdio.h>
 
 std::string FtpClientSocket::GetResponse() {
     while(true) { // TODO: Limit number of iterations ?
@@ -69,7 +70,7 @@ SocketClient* FtpClientSocket::PasvRestRetrX(const char* filename, unsigned long
 
     // Parse the (ip1,ip2,ip3,ip4,p1,p2) part	
     const char* responseLine = lastResponseLine.c_str();
-    char* start = strchr(responseLine, '(');
+    const char* start = strchr(responseLine, '(');
     if (start == NULL) throw "UNSUPPORTED_RESPONSE";
     int ip1,ip2,ip3,ip4,p1,p2;
     int numread = sscanf(start, "(%d,%d,%d,%d,%d,%d)", &ip1,&ip2,&ip3,&ip4,&p1,&p2);
