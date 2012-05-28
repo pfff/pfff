@@ -8,6 +8,7 @@
 #include <string.h>
 #include <iostream>
 #include <sstream>
+#include <cstdio>
 
 std::string FtpClientSocket::GetResponse() {
     while(true) { // TODO: Limit number of iterations ?
@@ -57,7 +58,7 @@ unsigned long long FtpClientSocket::Size(const char* filename) {
     }
     if (response[0] != '2') throw "OPERATION_FAILED";
     unsigned long long result;
-    int numscanned = sscanf(lastResponseLine.c_str() + 4, "%llu", &result);
+    int numscanned = std::sscanf(lastResponseLine.c_str() + 4, "%llu", &result);
     if (numscanned != 1) throw "UNSUPPORTED_RESPONSE";
     return result;
 }
@@ -92,7 +93,7 @@ SocketClient* FtpClientSocket::PasvRestRetrX(const char* filename, unsigned long
     char* start = strchr(responseLine, '(');
     if (start == NULL) throw "UNSUPPORTED_RESPONSE";
     int ip1,ip2,ip3,ip4,p1,p2;
-    int numread = sscanf(start, "(%d,%d,%d,%d,%d,%d)", &ip1,&ip2,&ip3,&ip4,&p1,&p2);
+    int numread = std::sscanf(start, "(%d,%d,%d,%d,%d,%d)", &ip1,&ip2,&ip3,&ip4,&p1,&p2);
     if (numread != 6) throw "UNSUPPORTED_RESPONSE";
 
     // Get the host and port parts

@@ -11,6 +11,7 @@
 #include<getopt.h> 
 #include<iostream>
 #include<map>
+#include<cstdio>
 #include<string>
 #include<sstream>
 #include<vector>
@@ -18,6 +19,7 @@
 using std::endl;
 using std::map;
 using std::ostream;
+using std::sprintf;
 using std::string;
 using std::stringstream;
 using std::vector;

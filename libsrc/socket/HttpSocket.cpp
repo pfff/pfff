@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <cstdio>
+using std::sscanf;
 
 long long HttpClientSocket::Size(const char* filename) {
     _socket = new SocketClient(host, port);

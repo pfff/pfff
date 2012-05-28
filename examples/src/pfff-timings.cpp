@@ -10,10 +10,12 @@
  */
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "TimeHelpers.h"
 #include "utils.h"
 using std::cout;
 using std::endl;
+using std::rand;
 using std::ifstream;
 using namespace FileUtils;
 

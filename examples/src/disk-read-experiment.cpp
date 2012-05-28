@@ -6,12 +6,14 @@
  */
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include "TimeHelpers.h"
 #include "utils.h"
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::ifstream;
+using std::rand;
 using FileUtils::read_lines;
 using FileUtils::size;
 using FileUtils::flush_buffers;
