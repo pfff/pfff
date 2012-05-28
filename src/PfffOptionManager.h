@@ -41,10 +41,15 @@ public:
 
     int   ftp_given;
     const char* ftp_host;
-    int   ftp_debug;
     //long  ftp_request_cost;
     //int   ftp_request_cost_given;
-    
+
+    int http_given;
+    const char* http_host;
+    long  port;
+    int   port_given;
+    int   net_debug;
+
     string error_message;
     PfffOptions options;
     

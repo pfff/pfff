@@ -35,7 +35,7 @@ public:
     
     // Returns the size of a given file on server
     unsigned long long Size(const char* filename);
-    
+    void Abort(); 
     
     // Does a sequence of PASV/REST/RETR filename commands. Returns the opened socket.
     // Silently ignores all 426 (Failure writing network stream) responses that might come due to dropped

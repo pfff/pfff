@@ -82,7 +82,12 @@ PfffOptionManager::PfffOptionManager(): OptionManager(), TEST_MODE(false) {
         add_parameterized("ftp-host", 'F', &ftp_given, new CharPtrOption(&ftp_host, ""), "<hostname>",
             "Interpret all files as absolute paths on the\n"
             "given FTP host.");
-        add_unparameterized("ftp-debug", 'G', &ftp_debug, "Output complete FTP protocol log.");
+        add_parameterized("http-host", 'W', &http_given, new CharPtrOption(&http_host, ""), "<hostname>",
+            "Interpret all files as absolute paths on the\n"
+            "given HTTP host.");
+        add_parameterized("port", 'P', &port_given, new PositiveLongIntOption(&port, -1), "<num>",
+            "Port for FTP/HTTP connection. Default is 21 for FTP and 80 for HTTP.");
+        add_unparameterized("net-debug", 'G', &net_debug, "Output complete FTP/HTTP protocol log.");
         /*add_parameterized("ftp-request-cost", 'c', &ftp_request_cost_given, new PositiveLongIntOption(&ftp_request_cost, 1024000), "<num>",
             "Cost of making a separate data read request, in bytes.\n"
             "It specifies that whenever the algorithm must request\n"
@@ -136,7 +141,15 @@ bool PfffOptionManager::validate() {
     		throw (char*)"Error: No files to process.";
     	if (!key_given) 
     		throw (char*)"Error: You must provide a value for the key.";
-    	
+        if (http_given && ftp_given)
+            throw (char*)"Error: Both HTTP and FTP may not be requested.";
+        
+        // Set default port
+        if (!port_given) {
+            if (http_given) port = 80;
+            else if (ftp_given) port = 21;
+        }
+
     	// If we're using ftp and haven't specified request_cost, set a 
     	// reasonable default.
     	if (!request_cost_given && ftp_given) request_cost = 1024000; 

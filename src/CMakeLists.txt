@@ -9,14 +9,15 @@ foreach(file ${link_ins})
 	endif()
 endforeach()
 
-add_library(pffflib-static STATIC output_utils PfffBlockReader PfffBlockSampleGenerator PfffCLib PfffFtpBlockReader 
+add_library(pffflib-static STATIC output_utils PfffBlockReader
+                        PfffBlockSampleGenerator PfffCLib PfffFtpBlockReader PfffHttpBlockReader
                         PfffHasher PfffOptionManager PfffOptions PfffOutputFormatter PfffPostHashing
                         ${link_ins})
 
-add_library(pffflib output_utils PfffBlockReader PfffBlockSampleGenerator PfffCLib PfffFtpBlockReader 
+add_library(pffflib output_utils PfffBlockReader PfffBlockSampleGenerator
+                        PfffCLib PfffFtpBlockReader PfffHttpBlockReader
                         PfffHasher PfffOptionManager PfffOptions PfffOutputFormatter PfffPostHashing
                         ${link_ins})
-
 
 add_executable(pfff pfff file_utils)
 target_link_libraries(pfff pffflib-static)

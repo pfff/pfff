@@ -35,6 +35,7 @@ bool FtpBlockReader::next_block(unsigned long long block_start, unsigned long bl
             delete sc;
             return false;
         }
+        ftp_connection->Abort();
         delete sc;
         
         // If the chunk size was smaller than block size, fill the remainder with zeroes

@@ -131,7 +131,7 @@ std::string Socket::ReceiveBytes() {
 int Socket::RecvBlocking(char* buffer, size_t length) {
     u_long arg = 0;
     if (ioctlsocket(s_, FIONREAD, &arg) != 0)
-      std::cout << "IOctlsocket failed" << std::endl;
+      std::cerr << "IOctlsocket failed" << std::endl;
 
     size_t recv_remaining = length;
     do {
@@ -144,12 +144,23 @@ int Socket::RecvBlocking(char* buffer, size_t length) {
     return length;
 }
 
+int Socket::Peek(int iterations) {
+    char r;
+    int result, i;
+    for (i = 0; i < iterations; i++) {
+        result = recv(s_, &r, 1, MSG_PEEK | MSG_DONTWAIT);
+        if (result == 1) break;
+    }
+    std::cout << "Peek returning " << result << " after " << i << " iters " << std::endl;
+    return result;
+}
+
 std::string Socket::ReceiveLine() {
   std::string ret;
   while (1) {
     char r;
-
-    switch(recv(s_, &r, 1, MSG_WAITALL)) {
+    int result = recv(s_, &r, 1, MSG_WAITALL);
+    switch(result) {
       case 0: // not connected anymore;
               // ... but last line sent
               // might not end in \n,

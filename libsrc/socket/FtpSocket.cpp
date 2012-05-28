@@ -6,6 +6,8 @@
  */
 #include "FtpSocket.h"
 #include <string.h>
+#include <iostream>
+#include <sstream>
 
 std::string FtpClientSocket::GetResponse() {
     while(true) { // TODO: Limit number of iterations ?
@@ -49,6 +51,10 @@ std::string FtpClientSocket::AnonymousLogin() {
 unsigned long long FtpClientSocket::Size(const char* filename) {
     std::string cmd = "SIZE ";
     std::string response = SendCommand(cmd + filename);
+    while(true) { // Ignore "Failed writing network stream" responses. TODO: Limit number of iterations?
+        if (response == "426" || response == "226") response = GetResponse();
+        else break;
+    }
     if (response[0] != '2') throw "OPERATION_FAILED";
     unsigned long long result;
     int numscanned = sscanf(lastResponseLine.c_str() + 4, "%llu", &result);
@@ -56,13 +62,27 @@ unsigned long long FtpClientSocket::Size(const char* filename) {
     return result;
 }
 
-#include <iostream>
-#include <sstream>
+void FtpClientSocket::Abort() {
+    std::string response = SendCommand("ABOR");
+}
+
 SocketClient* FtpClientSocket::PasvRestRetrX(const char* filename, unsigned long long rest) {
     // Start with a PASV
     std::string response = SendCommand("PASV");
     while(true) { // Ignore "Failed writing network stream" responses. TODO: Limit number of iterations?
-        if (response == "426" || response == "226") response = GetResponse();
+        if (response == "426" || response == "226") {
+            // First wait for another response
+            //int haveResponse = Peek(100);
+            //if (haveResponse == 1) {
+                response = GetResponse(); // Good, got response
+            //}
+            /*else {
+                // Let's resend the command
+                std::cout << "Resending" << std::endl;
+                response = SendCommand("PASV");
+                std::cout << "OK" << std::endl;
+            }*/
+        }
         else break;
     }
     if (response[0] != '2') throw "OPERATION_FAILED";
@@ -81,7 +101,7 @@ SocketClient* FtpClientSocket::PasvRestRetrX(const char* filename, unsigned long
     
     // Open connection
     SocketClient* result = new SocketClient(host, port);
-    
+  
     // Send rest command
     if (rest != 0) {
         std::ostringstream os;

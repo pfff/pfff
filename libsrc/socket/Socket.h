@@ -74,7 +74,11 @@ public:
 
   std::string ReceiveLine();
   std::string ReceiveBytes();
-  
+
+  // Does a non-blocking Peek for given number of iterations
+  // Returns -1 if no positive response obtained during this time and 1 otherwise.
+  int Peek(int iterations=100); 
+
   // Raw blocking recv
   int RecvBlocking(char* buffer, size_t length);
   

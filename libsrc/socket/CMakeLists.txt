@@ -1,1 +1,1 @@
-add_library(socket STATIC Socket FtpSocket)
+add_library(socket STATIC Socket FtpSocket HttpSocket)
