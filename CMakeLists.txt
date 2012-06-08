@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
+set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 2.8.4 is required
 project(Pfff)
 
 # Compile optimization.
 # NB! -O2 or -O3 produces faulty code (I guess due to poly1305aes somewhere).
-add_definitions(-O1)
+add_definitions(-O3)
 #add_definitions(-pg)
 #set(CMAKE_EXE_LINKER_FLAGS -pg)
 
@@ -75,12 +76,12 @@ set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Pfff")
 if(WIN32 AND NOT UNIX)
   # There is a bug in NSI that does not handle full unix paths properly. Make
-  # sure there is at least one set of four (4) backlasshes.
+  # sure there is at least one set of four (4) backslashes.
   #set(CPACK_PACKAGE_ICON "${Pfff_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
   set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\MyExecutable.exe")
   set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY}")
-  set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\kt.pri.ee")
-  set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\kt.pri.ee")
+  set(CPACK_NSIS_HELP_LINK "http://biit.cs.ut.ee/pfff")
+  set(CPACK_NSIS_URL_INFO_ABOUT "http://biit.cs.ut.ee/pfff")
   set(CPACK_NSIS_CONTACT "kt@ut.ee")
   set(CPACK_NSIS_MODIFY_PATH ON)
 else()
@@ -89,7 +90,3 @@ else()
 endif()
 set(CPACK_PACKAGE_EXECUTABLES "pfff" "Pfff")
 include(CPack)
-
-
-# Examples
-add_subdirectory(examples)
