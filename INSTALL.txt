@@ -1,0 +1,20 @@
+PFFF - Probabilistic Fast File Fingerprinting
+---------------------------------------------
+Version 1.0.
+
+COMPILATION:
+	In order to compile the software you need CMake (http://www.cmake.org/) as well as
+    the usual GCC toolchain. The compilatin process is simple:
+    
+    > mkdir build
+    > cd build
+    > cmake -G "Unix Makefiles" ..
+    > make
+    > make test
+    > make package
+    
+    For Windows, we suggest using Cygwin (http://www.cygwin.com).
+    Although CMake can be used to create build project for nearly any contemporary build system,
+    to the best of our knowledge, currently the code will not compile using Visual Studio compiler.
+    It does compile using MinGW, but fails the tests, which means that although the tool is probably
+    fully usable, it will not provide the same hashes as on other platforms.

@@ -5,7 +5,7 @@ Version 1.0.
 USAGE:
 	To obtain a basic hash of a file <filename>, pick a random number <num> and run
 	
-	> ./pfff -k <num>   <filename>
+	> ./pfff <filename>
 	
 	You can provide multiple files in a single invocation.
 	Numerous options for controlling the algorithm operation and output format are available.

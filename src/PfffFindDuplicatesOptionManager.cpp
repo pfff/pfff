@@ -4,6 +4,7 @@
  */
 #include "PfffFindDuplicatesOptionManager.h"
 #include <cstdlib>
+#include <ctime>
 #include <getopt.h> 
 #include <string.h>
 #include <vector>
@@ -15,6 +16,7 @@ using std::cerr;
 using std::cout;
 using std::endl;
 using std::vector;
+using std::time;
 
 // ------------ PfffOptionManager ---------------
 PfffFindDuplicatesOptionManager::PfffFindDuplicatesOptionManager(): OptionManager(), TEST_MODE(false) {

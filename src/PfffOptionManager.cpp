@@ -4,6 +4,7 @@
  */
 #include "PfffOptionManager.h"
 #include <cstdlib>
+#include <ctime>
 #include <getopt.h> 
 #include <string.h>
 #include <vector>
@@ -13,6 +14,7 @@
 
 using std::cerr;
 using std::cout;
+using std::time;
 using std::endl;
 using std::vector;
 
@@ -21,7 +23,7 @@ PfffOptionManager::PfffOptionManager(): OptionManager(), TEST_MODE(false) {
     add_group("Basic Algorithm Options");
         add_parameterized("key", 'k', &key_given, new BoundedLongIntOption(&key, PFO_KEY_MIN, PFO_KEY_MAX, 0), "<num>",
             "Randomization key, given as a positive integer between\n"
-            quote(PFO_KEY_MIN) " and " quote(PFO_KEY_MAX) ". No default, must be specified.");
+            quote(PFO_KEY_MIN) " and " quote(PFO_KEY_MAX) ". If unspecified, picked randomly depending on time.");
         add_parameterized("with-header", 'H', NULL, new BoundedLongIntOption(&header_block_count, PFO_HBC_MIN, PFO_HBC_MAX, PFO_HBC_DEFAULT), "<num>", 
             "Include <num> first blocks from the file verbatim.\n"
             "(the remaining part of the file will be hashed as\n"
@@ -139,8 +141,10 @@ bool PfffOptionManager::validate() {
     try {
     	if (parameters.size() == 0)
     		throw (char*)"Error: No files to process.";
-    	if (!key_given) 
-    		throw (char*)"Error: You must provide a value for the key.";
+    	if (!key_given) {
+            srand ( time(NULL) );
+            key = rand();
+        }
         if (http_given && ftp_given)
             throw (char*)"Error: Both HTTP and FTP may not be requested.";
         
