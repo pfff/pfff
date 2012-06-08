@@ -9,6 +9,7 @@
 #include "file_utils.h"
 #include "PfffBlockReader.h"
 #include "PfffFtpBlockReader.h"
+#include "PfffHttpBlockReader.h"
 #include "PfffHasher.h"
 #include "PfffFindDuplicatesOptionManager.h"
 #include <stdlib.h>
@@ -64,6 +65,7 @@ class PfffFindDuplicatesAppEngine: public FileProcessor {
 public:
     PfffFindDuplicatesOptionManager option_manager;
     FtpClientSocket* ftp_connection;
+    HttpClientSocket* http_connection;
     PfffHasher* hasher;
     DuplicateTracker<string, string> dup_tracker;
     
@@ -84,23 +86,28 @@ public:
     		exit(0);
     	}
     	
-    	// Initialize ftp connection, if necessary
-    	if (option_manager.ftp_given) {
-    		if (option_manager.ftp_debug) Socket::DEBUG = true;
-    		ftp_connection = new FtpClientSocket(option_manager.ftp_host);
-    		string response = ftp_connection->AnonymousLogin();
-    		if (response[0] != '2') {
-    			cerr << "FTP login failed" << endl;
-    			delete ftp_connection;
-    			exit(1);
-    		}
-    		response = ftp_connection->SendCommand("TYPE I");
-    		if (response[0] != '2') {
-    			cerr << "FTP operation TYPE I failed" << endl;
-    			delete ftp_connection;
-    			exit(1);
-    		}			
-    	}
+    	// Initialize network connection, if necessary
+    	if (option_manager.ftp_given || option_manager.http_given) {
+    		if (option_manager.net_debug) Socket::DEBUG = true;
+            if (option_manager.ftp_given) {
+        		ftp_connection = new FtpClientSocket(option_manager.ftp_host, option_manager.port);
+        		string response = ftp_connection->AnonymousLogin();
+        		if (response[0] != '2') {
+    	    		cerr << "FTP login failed" << endl;
+    		    	delete ftp_connection;
+    			    exit(1);
+        		}
+        		response = ftp_connection->SendCommand("TYPE I");
+    	    	if (response[0] != '2') {
+    		    	cerr << "FTP operation TYPE I failed" << endl;
+    			    delete ftp_connection;
+        			exit(1);
+        		}
+            }
+            else if (option_manager.http_given) {
+                http_connection = new HttpClientSocket(option_manager.http_host, option_manager.port);
+            }
+   	    }
     	
     	// Initialize hasher
     	hasher = new PfffHasher(&option_manager.options);    	
@@ -120,7 +127,9 @@ public:
     	BlockReader* input_file;
     	if (option_manager.ftp_given) 
     		input_file = new FtpBlockReader(ftp_connection, filename.c_str());
-    	else 
+    	else if (option_manager.http_given)
+            input_file = new HttpBlockReader(http_connection, filename.c_str());
+        else
     		input_file = new LocalFileBlockReader(filename.c_str());
     		
     	if (option_manager.request_cost > 0) input_file = new BufferingBlockReader(input_file, option_manager.request_cost);

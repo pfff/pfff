@@ -21,7 +21,7 @@ PfffFindDuplicatesOptionManager::PfffFindDuplicatesOptionManager(): OptionManage
     add_group("Basic Algorithm Options");
         add_parameterized("key", 'k', &key_given, new BoundedLongIntOption(&key, PFO_KEY_MIN, PFO_KEY_MAX, 0), "<num>",
             "Randomization key, given as a positive integer between\n"
-            quote(PFO_KEY_MIN) " and " quote(PFO_KEY_MAX) ". No default, must be specified.");
+            quote(PFO_KEY_MIN) " and " quote(PFO_KEY_MAX) ". Uses time-based random initialization by default.");
         add_parameterized("with-header", 'H', NULL, new BoundedLongIntOption(&header_block_count, PFO_HBC_MIN, PFO_HBC_MAX, PFO_HBC_DEFAULT), "<num>", 
             "Include <num> first blocks from the file verbatim.\n"
             "(the remaining part of the file will be hashed as\n"
@@ -32,8 +32,8 @@ PfffFindDuplicatesOptionManager::PfffFindDuplicatesOptionManager(): OptionManage
         add_unparameterized("help", 'h', &help, 
             "Output this help message to stdout.");
     add_group("Advanced Options");
-        add_parameterized("block-count", 'n', NULL, new BoundedLongIntOption(&block_count, PFO_BC_MIN, PFO_BC_MAX, PFO_BC_DEFAULT), "<num>",
-            "Number of blocks to sample. Default is " quote(PFO_BC_DEFAULT) ".\n"
+        add_parameterized("block-count", 'n', NULL, new BoundedLongIntOption(&block_count, PFO_BC_MIN, PFO_BC_MAX, PFO_BC_DEFAULT_SMALL), "<num>",
+            "Number of blocks to sample. Default is " quote(PFO_BC_DEFAULT_SMALL) ".\n"
             "Maximum is " quote(PFO_BC_MAX) ".");
         add_parameterized("block-size", 's', NULL, new BoundedLongIntOption(&block_size, PFO_BS_MIN, PFO_BS_MAX, PFO_BS_DEFAULT), "<num>",
             "Size of each block in bytes. Default is " quote(PFO_BS_DEFAULT) ".\n"
@@ -62,7 +62,12 @@ PfffFindDuplicatesOptionManager::PfffFindDuplicatesOptionManager(): OptionManage
         add_parameterized("ftp-host", 'F', &ftp_given, new CharPtrOption(&ftp_host, ""), "<hostname>",
             "Interpret all files as absolute paths on the\n"
             "given FTP host.");
-        add_unparameterized("ftp-debug", 'G', &ftp_debug, "Output complete FTP protocol log.");
+        add_parameterized("http-host", 'W', &http_given, new CharPtrOption(&http_host, ""), "<hostname>",
+            "Interpret all files as absolute paths on the\n"
+            "given HTTP host.");
+        add_parameterized("port", 'P', &port_given, new PositiveLongIntOption(&port, -1), "<num>",
+            "Port for FTP/HTTP connection. Default is 21 for FTP and 80 for HTTP.");
+        add_unparameterized("net-debug", 'G', &net_debug, "Output complete FTP/HTTP protocol log.");
         /*add_parameterized("ftp-request-cost", 'c', &ftp_request_cost_given, new PositiveLongIntOption(&ftp_request_cost, 1024000), "<num>",
             "Cost of making a separate data read request, in bytes.\n"
             "It specifies that whenever the algorithm must request\n"
@@ -114,8 +119,18 @@ bool PfffFindDuplicatesOptionManager::validate() {
     try {
     	if (parameters.size() == 0)
     		throw (char*)"Error: No files to process.";
-    	if (!key_given) 
-    		throw (char*)"Error: You must provide a value for the key.";
+    	if (!key_given) {
+            srand ( time(NULL) );
+            key = rand();
+        }
+        if (http_given && ftp_given)
+            throw (char*)"Error: Both HTTP and FTP may not be requested.";
+        
+        // Set default port
+        if (!port_given) {
+            if (http_given) port = 80;
+            else if (ftp_given) port = 21;
+        }
     	
     	// If we're using ftp and haven't specified request_cost, set a 
     	// reasonable default.

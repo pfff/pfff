@@ -1,19 +1,6 @@
 PFFF - Probabilistic Fast File Fingerprinting
 ---------------------------------------------
-Version 1 alpha.
-
-COMPILATION:
-	Under Linux:
-		make && make tests
-	
-	Under Windows/MinGW
-		make -f Makefile.win tests
-		make -f Makefile.win
-
-	The compiled executable (pfff) is produced in the build/ subdirectory.
-	
-	Compilation has so far only been tested on Win32 and Linux x86_64,
-	hence bugs are possible.
+Version 1.0.
 
 USAGE:
 	To obtain a basic hash of a file <filename>, pick a random number <num> and run
@@ -27,8 +14,10 @@ USAGE:
 	> ./pfff --help
 
 EXPERIMENTAL FEATURES:
-	Note that the hashing-over-FTP feature is purely experimental: it is not guaranteed to work
-	properly nor even produce correct hash (I've observed some strange cases).
+	Note that the hashing-over-HTTP and hashing-over-FTP features are purely experimental:
+    those have not been tested extensively with all possible variations of HTTP and FTP servers.
+    In particular, not all HTTP servers support range requests, with those, pfff will return
+    an error.
 
 COPYRIGHT AND LICENSE:
 	The software copyrights belong to Konstantin Tretyakov, Pjotr Prins & Swen Laur.

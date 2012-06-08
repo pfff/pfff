@@ -1,5 +1,5 @@
 // The file was obtained from http://www.adp-gmbh.ch/win/misc/sockets.html
-// and minor modifications were introduced (DEBUG variable, host field).
+// and modifications were introduced.
 // The original file was accompanied with the following message
 /* 
    Socket.cpp
@@ -32,6 +32,9 @@
 #include <string.h>
 
 using namespace std;
+#ifndef MSG_DONTWAIT
+    #define MSG_DONTWAIT 0
+#endif
 
 int Socket::nofSockets_= 0;
 bool Socket::DEBUG = false;
