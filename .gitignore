@@ -1,0 +1,5 @@
+*.cmake
+Makefile
+*.outx
+Testing/
+
