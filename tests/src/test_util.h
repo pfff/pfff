@@ -11,6 +11,7 @@
 #include <ostream>
 #include <string>
 #include "UnitTest++.h"
+#include "stdint.h"
 using namespace std;
 
 
