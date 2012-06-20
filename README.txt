@@ -5,8 +5,11 @@ Version 1.0.
 USAGE:
 	To obtain a basic hash of a file <filename>, pick a random number <num> and run
 	
-	> ./pfff <filename>
+	> ./pfff -k number <filename>
 	
+  where number is used to seed the randomizer. To recreate the pfff
+  values use the same number again.
+
 	You can provide multiple files in a single invocation.
 	Numerous options for controlling the algorithm operation and output format are available.
 	A list of these can be obtained by invoking
