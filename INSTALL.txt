@@ -4,7 +4,7 @@ Version 1.0.
 
 COMPILATION:
 	In order to compile the software you need CMake (http://www.cmake.org/) as well as
-    the usual GCC toolchain. The compilatin process is simple:
+    the usual GCC toolchain. The compilation process is simple:
     
     > mkdir build
     > cd build
@@ -12,7 +12,19 @@ COMPILATION:
     > make
     > make test
     > make package
-    
+
+  alternatively build from the source root dir
+
+    > cd pfff
+    > rm CMakeCache.txt
+    > cmake .
+    > make
+    > make test
+    > make install
+
+  if test fails, please report it to us. Send us the test output
+  recorded in Testing/Temporary/LastTest.log
+  
     For Windows, we suggest using Cygwin (http://www.cygwin.com).
     Although CMake can be used to create build project for nearly any contemporary build system,
     to the best of our knowledge, currently the code will not compile using Visual Studio compiler.
