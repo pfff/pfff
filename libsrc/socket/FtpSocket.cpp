@@ -5,10 +5,10 @@
  * License:   The terms of use of this software and its source code are defined by the BSD license.
  */
 #include "FtpSocket.h"
-#include <string.h>
 #include <iostream>
 #include <sstream>
 #include <cstdio>
+#include <cstring>
 
 std::string FtpClientSocket::GetResponse() {
     while(true) { // TODO: Limit number of iterations ?
