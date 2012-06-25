@@ -34,7 +34,7 @@ using namespace std;
 
 
 
-/** 
+/**
  * Fixture used for tests that wish to validate that they generate
  * a sequence of values equal to one from a file.
  */

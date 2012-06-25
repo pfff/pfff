@@ -7,9 +7,8 @@ USAGE:
 	
 	> ./pfff -k number <filename>
 	
-  where number is used to seed the randomizer. To recreate the pfff
-  values use the same number again.
-
+    where number is used to seed the randomizer. To recreate the pfff
+    values use the same number again.
 	You can provide multiple files in a single invocation.
 	Numerous options for controlling the algorithm operation and output format are available.
 	A list of these can be obtained by invoking
@@ -20,7 +19,7 @@ EXPERIMENTAL FEATURES:
 	Note that the hashing-over-HTTP and hashing-over-FTP features are purely experimental:
     those have not been tested extensively with all possible variations of HTTP and FTP servers.
     In particular, not all HTTP servers support range requests, with those, pfff will return
-    an error.
+    an (obscure-looking) error.
 
 COPYRIGHT AND LICENSE:
 	The software copyrights belong to Konstantin Tretyakov, Pjotr Prins & Swen Laur.
