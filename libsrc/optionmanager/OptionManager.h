@@ -85,7 +85,7 @@ public:
     BoundedLongIntOption(long* target_variable, long min_value, long max_value, long default_value):
         target_variable(target_variable), min_value(min_value),
         max_value(max_value), default_value(default_value) {
-            sprintf(expected_type_str, "an integer between %d and %d", min_value, max_value);
+            sprintf(expected_type_str, "an integer between %ld and %ld", min_value, max_value);
     }
 
     void prepare();
