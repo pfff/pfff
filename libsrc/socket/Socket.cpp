@@ -30,6 +30,7 @@
 #include "Socket.h"
 #include <iostream>
 #include <string.h>
+#include <unistd.h>
 
 using namespace std;
 #ifndef MSG_DONTWAIT
