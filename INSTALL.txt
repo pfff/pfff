@@ -2,6 +2,11 @@ PFFF - Probabilistic Fast File Fingerprinting
 ---------------------------------------------
 Version 1.0.
 
+INSTALLATION:
+  PFFF is part of GNU Guix
+
+    > guix package -i pfff
+
 COMPILATION:
 	In order to compile the software you need CMake (http://www.cmake.org/) as well as
     the usual GCC toolchain. The compilation process is simple:
