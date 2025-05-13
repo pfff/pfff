@@ -60,6 +60,10 @@ LocalFileBlockReader::~LocalFileBlockReader() {
 	// http://www.cygwin.com/faq/faq.programming.html#faq.programming.stat64
 	#define stat64 stat
 #endif
+#ifdef __APPLE__
+    // stat64 is not used on Darwin, just use struct stat which expands to __DARWIN_STRUCT_STAT64
+    #define stat64 stat
+#endif
 
 long long LocalFileBlockReader::_size() {
     struct stat64 s;
