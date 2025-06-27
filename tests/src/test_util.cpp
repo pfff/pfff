@@ -27,6 +27,10 @@ uint64_t FileFixture::next_uint64() {
 string FileFixture::next_line(ifstream& infile) {
     string result;
     getline(infile, result);
+
+    if (result.empty())
+        return result;
+
     // Our files were made on windows so we might have end of line problems
     if (result[result.size()-1] == '\n' || result[result.size()-1] == '\r')
         result.resize(result.size()-1);

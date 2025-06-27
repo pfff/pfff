@@ -11,6 +11,10 @@
 	// http://www.cygwin.com/faq/faq.programming.html#faq.programming.stat64
 	#define stat64 stat
 #endif
+#ifdef __APPLE__
+    // stat64 is not used on Darwin, just use struct stat which expands to __DARWIN_STRUCT_STAT64
+    #define stat64 stat
+#endif
 
 TEST(TestPlatform) {
     // Make sure that stat64.st_size is 64-bit
